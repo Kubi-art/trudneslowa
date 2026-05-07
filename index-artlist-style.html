@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrudneSlowa.pl — Znajdź właściwe słowa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #ff8562;
+            --accent-hover: #ff6b45;
+            --accent-light: #ff9f7f;
+            --border: #2a2a2a;
+            --gradient-1: linear-gradient(135deg, #ff8562 0%, #ff6b8a 100%);
+            --gradient-2: linear-gradient(135deg, #ffa574 0%, #ff7eb3 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.8);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 10px 20px;
+            border-radius: 100px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-premium {
+            background: var(--accent);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-premium:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(255, 133, 98, 0.3);
+        }
+
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .generator-section {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 64px;
+            max-width: 900px;
+            margin: 0 auto 100px;
+            border: 1px solid var(--border);
+        }
+
+        .step-indicator {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 56px;
+            justify-content: center;
+        }
+
+        .step {
+            height: 3px;
+            width: 80px;
+            background: var(--border);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            background: var(--gradient-1);
+        }
+
+        .form-group {
+            margin-bottom: 48px;
+        }
+
+        .form-group.hidden {
+            display: none;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .situation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .situation-btn {
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+
+        .situation-btn:hover {
+            border-color: var(--accent);
+            background: rgba(255, 133, 98, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .situation-btn.selected {
+            border-color: var(--accent);
+            background: rgba(255, 133, 98, 0.15);
+        }
+
+        .situation-emoji {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .situation-btn strong {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 140px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tone-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .tone-btn {
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tone-btn:hover {
+            border-color: var(--accent);
+            background: rgba(255, 133, 98, 0.1);
+        }
+
+        .tone-btn.selected {
+            border-color: var(--accent);
+            background: rgba(255, 133, 98, 0.15);
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 48px;
+            font-family: inherit;
+        }
+
+        .generate-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(255, 133, 98, 0.3);
+        }
+
+        .generate-btn:disabled {
+            background: var(--border);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            display: none;
+            margin-top: 56px;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .result-card:hover {
+            border-color: var(--accent);
+        }
+
+        .result-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .copy-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent);
+            background: rgba(255, 133, 98, 0.1);
+        }
+
+        .features {
+            padding: 100px 0;
+        }
+
+        .features h2 {
+            font-size: 56px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 32px;
+            background: rgba(255, 133, 98, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .feature h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .feature p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .pricing {
+            padding: 100px 0;
+        }
+
+        .pricing h2 {
+            font-size: 56px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            padding: 48px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .pricing-card.featured {
+            background: var(--gradient-1);
+            border: none;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.07) translateY(-4px);
+        }
+
+        .plan-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-card.featured .plan-name {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .plan-price {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .plan-price span {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .pricing-card.featured .plan-price span {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 15px;
+        }
+
+        .pricing-card.featured .plan-features li {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .plan-btn {
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            border: none;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .pricing-card:not(.featured) .plan-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid var(--border);
+        }
+
+        .pricing-card:not(.featured) .plan-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .pricing-card.featured .plan-btn {
+            background: white;
+            color: #ff8562;
+        }
+
+        .pricing-card.featured .plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 42px;
+            }
+
+            .generator-section {
+                padding: 40px 24px;
+            }
+
+            .situation-grid, .tone-options {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid, .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-4px);
+            }
+
+            .nav {
+                gap: 24px;
+            }
+
+            .features h2, .pricing h2 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">TrudneSlowa</div>
+                <nav class="nav">
+                    <a href="#jak-dziala" class="nav-link">Jak działa</a>
+                    <a href="#cennik" class="nav-link">Cennik</a>
+                    <a href="#premium" class="btn-premium">Wypróbuj Premium</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Trudna rozmowa?<br>Znajdź <span class="gradient-text">właściwe słowa</span></h1>
+            <p class="subtitle">Prośba o podwyżkę, zerwanie, reklamacja — pomożemy Ci sformułować wiadomość, która brzmi dokładnie tak jak chcesz.</p>
+            <div class="trust-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>100% prywatne · Bez rejestracji</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="generator-section">
+            <div class="step-indicator">
+                <div class="step active" id="step-indicator-1"></div>
+                <div class="step" id="step-indicator-2"></div>
+                <div class="step" id="step-indicator-3"></div>
+            </div>
+
+            <form id="generatorForm">
+                <div class="form-group" id="step1">
+                    <label>Wybierz sytuację</label>
+                    <div class="situation-grid">
+                        <button type="button" class="situation-btn" data-situation="podwyzka">
+                            <span class="situation-emoji">💰</span>
+                            <strong>Prośba o podwyżkę</strong>
+                        </button>
+                        <button type="button" class="situation-btn" data-situation="zerwanie">
+                            <span class="situation-emoji">💔</span>
+                            <strong>Zerwanie</strong>
+                        </button>
+                        <button type="button" class="situation-btn" data-situation="reklamacja">
+                            <span class="situation-emoji">📦</span>
+                            <strong>Reklamacja</strong>
+                        </button>
+                        <button type="button" class="situation-btn" data-situation="przeprosiny">
+                            <span class="situation-emoji">🙏</span>
+                            <strong>Przeprosiny</strong>
+                        </button>
+                        <button type="button" class="situation-btn" data-situation="odmowa">
+                            <span class="situation-emoji">🚫</span>
+                            <strong>Odmowa</strong>
+                        </button>
+                        <button type="button" class="situation-btn" data-situation="zwolnienie">
+                            <span class="situation-emoji">👋</span>
+                            <strong>Rezygnacja</strong>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group hidden" id="step2">
+                    <label>Opisz kontekst (opcjonalnie)</label>
+                    <textarea id="context" placeholder="Np. Pracuję tu od 2 lat, mam dobre wyniki..."></textarea>
+                </div>
+
+                <div class="form-group hidden" id="step3">
+                    <label>Wybierz ton wiadomości</label>
+                    <div class="tone-options">
+                        <button type="button" class="tone-btn" data-tone="formal">Oficjalny</button>
+                        <button type="button" class="tone-btn" data-tone="friendly">Przyjacielski</button>
+                        <button type="button" class="tone-btn" data-tone="direct">Bezpośredni</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="generate-btn" id="generateBtn" disabled>Znajdź właściwe słowa</button>
+            </form>
+
+            <div class="results" id="results">
+                <div class="result-card">
+                    <div class="result-label">Wersja 1 — Profesjonalna</div>
+                    <div class="result-text" id="result1"></div>
+                    <button class="copy-btn" onclick="copyText('result1')">📋 Kopiuj</button>
+                </div>
+                <div class="result-card">
+                    <div class="result-label">Wersja 2 — Empatyczna</div>
+                    <div class="result-text" id="result2"></div>
+                    <button class="copy-btn" onclick="copyText('result2')">📋 Kopiuj</button>
+                </div>
+                <div class="result-card">
+                    <div class="result-label">Wersja 3 — Zwięzła</div>
+                    <div class="result-text" id="result3"></div>
+                    <button class="copy-btn" onclick="copyText('result3')">📋 Kopiuj</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="features" id="jak-dziala">
+        <div class="container">
+            <h2>Dlaczego TrudneSlowa?</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>W 30 sekund</h3>
+                    <p>Wybierz sytuację, opisz kontekst i dostaniesz 3 gotowe propozycje do wyboru.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Dopasowane</h3>
+                    <p>Wybierz ton — oficjalny, przyjacielski czy bezpośredni. Każda brzmi naturalnie.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Prywatne</h3>
+                    <p>Nie przechowujemy Twoich wiadomości. Wszystko zostaje tylko u Ciebie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="cennik">
+        <div class="container">
+            <h2>Wybierz plan</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="plan-name">Darmowy</div>
+                    <div class="plan-price">0 zł<span>/miesiąc</span></div>
+                    <ul class="plan-features">
+                        <li>✅ 3 wiadomości miesięcznie</li>
+                        <li>✅ 3 wersje do wyboru</li>
+                        <li>✅ Wszystkie sytuacje</li>
+                        <li>❌ Bez historii</li>
+                    </ul>
+                    <button class="plan-btn">Zacznij za darmo</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="plan-name">Premium</div>
+                    <div class="plan-price">39 zł<span>/miesiąc</span></div>
+                    <ul class="plan-features">
+                        <li>✅ Nielimitowane wiadomości</li>
+                        <li>✅ Wszystkie sytuacje</li>
+                        <li>✅ Historia wiadomości</li>
+                        <li>✅ Priorytetowe wsparcie</li>
+                    </ul>
+                    <button class="plan-btn">Wypróbuj 7 dni za darmo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 TrudneSlowa.pl · Polityka prywatności · Regulamin</p>
+        </div>
+    </footer>
+
+    <script>
+        let selectedSituation = null;
+        let selectedTone = null;
+
+        document.querySelectorAll('.situation-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.situation-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSituation = this.dataset.situation;
+                
+                document.getElementById('step2').classList.remove('hidden');
+                document.getElementById('step-indicator-2').classList.add('active');
+                document.getElementById('step3').classList.remove('hidden');
+                document.getElementById('step-indicator-3').classList.add('active');
+                
+                updateButton();
+            });
+        });
+
+        document.querySelectorAll('.tone-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedTone = this.dataset.tone;
+                updateButton();
+            });
+        });
+
+        function updateButton() {
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = !(selectedSituation && selectedTone);
+        }
+
+        document.getElementById('generatorForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const context = document.getElementById('context').value;
+            const btn = document.getElementById('generateBtn');
+            
+            btn.disabled = true;
+            btn.textContent = 'Generuję...';
+            
+            try {
+                const messages = await generateMessagesWithAI(selectedSituation, context, selectedTone);
+                document.getElementById('result1').textContent = messages[0];
+                document.getElementById('result2').textContent = messages[1];
+                document.getElementById('result3').textContent = messages[2];
+                document.getElementById('results').classList.add('show');
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                alert('Wystąpił błąd. Spróbuj ponownie.');
+                console.error('Error:', error);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Znajdź właściwe słowa';
+            }
+        });
+
+        async function generateMessagesWithAI(situation, context, tone) {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ situation, context, tone })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to generate');
+            }
+
+            const data = await response.json();
+            return data.messages;
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => alert('Skopiowano!'));
+        }
+    </script>
+</body>
+</html>
