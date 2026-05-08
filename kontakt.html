@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skontaktuj się z TrudneSlowa.pl. Zapytania biznesowe, plany zespołowe, wsparcie techniczne.">
+    <title>Kontakt — TrudneSlowa.pl</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">TrudneSlowa</a>
+                <nav class="main-nav">
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-link">Generator</a>
+                        <a href="cennik.html" class="nav-link">Cennik</a>
+                        <a href="baza-wiedzy.html" class="nav-link">Baza wiedzy</a>
+                        <a href="bezpieczenstwo.html" class="nav-link">Bezpieczeństwo</a>
+                    </div>
+                    <div class="nav-auth">
+                        <a href="#" class="btn-login">Zaloguj się</a>
+                        <a href="#" class="btn-signup">Załóż darmowe konto</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Skontaktuj się z nami</h1>
+            <p class="subtitle">Pytania? Zainteresowanie planem Business? Napisz do nas.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="contact-content">
+            <form id="contactForm">
+                <div class="form-field">
+                    <label for="name">Imię i nazwisko *</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="email">Email służbowy *</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="company">Firma</label>
+                    <input type="text" id="company">
+                </div>
+
+                <div class="form-field">
+                    <label for="subject">Temat zapytania *</label>
+                    <select id="subject" required>
+                        <option value="">Wybierz...</option>
+                        <option value="business">Plan Business dla zespołu</option>
+                        <option value="support">Wsparcie techniczne</option>
+                        <option value="partnership">Partnerstwo biznesowe</option>
+                        <option value="other">Inne</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="message">Wiadomość *</label>
+                    <textarea id="message" rows="6" required placeholder="Opisz swoje zapytanie..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Wyślij wiadomość</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>TrudneSlowa</h3>
+                    <p>Profesjonalne narzędzie wspierające komunikację biznesową w trudnych sytuacjach. Zaufały nam setki firm w Polsce.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon" aria-label="LinkedIn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Produkt</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Generator</a></li>
+                        <li><a href="cennik.html">Cennik</a></li>
+                        <li><a href="baza-wiedzy.html">Baza wiedzy</a></li>
+                        <li><a href="kontakt.html">Dla zespołów</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Firma</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">O nas</a></li>
+                        <li><a href="bezpieczenstwo.html">Bezpieczeństwo</a></li>
+                        <li><a href="kontakt.html">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Dokumenty</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Polityka prywatności</a></li>
+                        <li><a href="#">Regulamin</a></li>
+                        <li><a href="#">RODO</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 TrudneSlowa.pl · Wszystkie prawa zastrzeżone</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
