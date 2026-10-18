@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", "Helvetica Neue", sans-serif;
+
+  --color-ink: #1d1d1f;
+  --color-parchment: #f5f5f7;
+  --color-graphite: #1d1d1f;
+  --color-muted: #6e6e73;
+  --color-muted-dark: #a1a1a6;
+  --color-hairline: #e0e0e0;
+  --color-amber: #f5a524;
+  --color-amber-deep: #b45309;
+
+  --ease-apple: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-parchment);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.022em;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-amber);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+}
+
+input[type="range"] {
+  accent-color: var(--color-ink);
+  cursor: pointer;
+}
+
+/* Amber Glow (21st.dev): bursztyn wschodzi od dolnej krawędzi i przechodzi w głęboki brąz przed połową. */
+.amber-glow {
+  background:
+    radial-gradient(120% 60% at 50% 100%, rgba(245, 158, 11, 0.6) 0%, rgba(217, 119, 6, 0.32) 22%, rgba(120, 53, 15, 0.22) 40%, rgba(9, 9, 11, 0) 58%),
+    radial-gradient(60% 30% at 50% 100%, rgba(253, 186, 116, 0.35), rgba(9, 9, 11, 0) 70%);
+  transform-origin: 50% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .amber-glow {
+    animation: sunrise 4s var(--ease-apple) both, breathe 10s ease-in-out 4s infinite;
+  }
+}
+
+@keyframes sunrise {
+  from { opacity: 0; transform: translateY(22%) scaleY(0.6); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.03); }
+}
+
+/* Delikatne ziarno na całej stronie, żeby płaskie tła nie były sterylne. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgba(29, 29, 31, 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
