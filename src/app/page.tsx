@@ -165,7 +165,7 @@ export default function Home() {
         <ScrollExpandMedia
           mediaType="video"
           mediaSrc={images.plumberVideo}
-          posterSrc={images.plumber}
+          posterSrc={images.plumberPoster}
           bgImageSrc={images.nightBlocks}
           alt="Hydraulik pod zlewem, obok na podłodze dzwoni telefon"
           title="Ty pracujesz. My odbieramy."

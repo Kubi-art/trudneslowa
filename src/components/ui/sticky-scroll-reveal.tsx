@@ -2,9 +2,9 @@
 
 // "Sticky Scroll Reveal" (Aceternity UI przez 21st.dev, licencja MIT), to samo API: content = [{ title, description, content }].
 // Kroki przewijają się po lewej z linią postępu, panel po prawej jest przypięty i zmienia się z aktywnym krokiem,
-// a za panelem przesuwa się ciepła poświata. Sterowane przewijaniem strony.
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
-import { useRef, useState, type ReactNode } from "react";
+// a za panelem przesuwa się ciepła poświata. Aktywny jest ten krok, który przecina środek ekranu.
+import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Item = { title: string; description: string; content?: ReactNode };
 
@@ -13,18 +13,27 @@ const glows = ["20% 30%", "70% 55%", "40% 85%"];
 
 export function StickyScroll({ content }: { content: Item[] }) {
   const ref = useRef<HTMLDivElement>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 60%", "end 60%"] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 50%", "end 50%"] });
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24 });
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const next = Math.min(content.length - 1, Math.max(0, Math.floor(v * content.length)));
-    if (next !== active) setActive(next);
-  });
+  // krok jest aktywny, gdy przechodzi przez środkową linię ekranu
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.index));
+        }
+      },
+      { rootMargin: "-50% 0px -50% 0px" },
+    );
+    stepRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, [content.length]);
 
   return (
     <div className="relative overflow-hidden">
-      {/* poświata za panelem, przesuwa się z krokiem */}
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -36,36 +45,44 @@ export function StickyScroll({ content }: { content: Item[] }) {
 
       <div ref={ref} className="relative mx-auto grid max-w-[1080px] gap-10 px-5 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
         <div className="relative md:pl-10">
-          {/* linia postępu */}
-          <div aria-hidden="true" className="absolute bottom-[12vh] left-0 top-[12vh] hidden w-[2px] rounded-full bg-white/10 md:block">
+          <div aria-hidden="true" className="absolute bottom-[24vh] left-0 top-[24vh] hidden w-[2px] rounded-full bg-white/10 md:block">
             <motion.div style={{ scaleY: progress }} className="h-full w-full origin-top rounded-full bg-amber" />
           </div>
 
           {content.map((item, i) => (
-            <div key={item.title} className="relative flex min-h-[48vh] flex-col justify-center py-10">
+            <div
+              key={item.title}
+              ref={(el) => {
+                stepRefs.current[i] = el;
+              }}
+              data-index={i}
+              className="relative flex flex-col justify-center py-10 md:min-h-[48vh]"
+            >
               <span
                 aria-hidden="true"
                 className={`absolute -left-10 top-1/2 hidden h-3.5 w-3.5 -translate-x-[6px] -translate-y-1/2 rounded-full border-2 transition-colors duration-500 md:block ${
                   active >= i ? "border-amber bg-amber" : "border-white/25 bg-graphite"
                 }`}
               />
-              {/* Na telefonie obraz kroku jest nad tekstem, bo panel nie jest przypięty */}
               <div className="mb-6 aspect-[4/3] overflow-hidden rounded-[22px] md:hidden">{item.content}</div>
-              <motion.h3
-                animate={{ opacity: active === i ? 1 : 0.35 }}
-                className="text-[clamp(26px,3vw,36px)] font-semibold tracking-[-0.025em] text-parchment"
+              <h3
+                className={`text-[clamp(26px,3vw,36px)] font-semibold tracking-[-0.025em] text-parchment transition-opacity duration-500 ${active === i ? "md:opacity-100" : "md:opacity-35"}`}
               >
                 {item.title}
-              </motion.h3>
-              <motion.p animate={{ opacity: active === i ? 1 : 0.35 }} className="mt-4 max-w-[38ch] text-[19px] text-muted-dark">
+              </h3>
+              <p
+                className={`mt-4 max-w-[38ch] text-[19px] text-muted-dark transition-opacity duration-500 ${active === i ? "md:opacity-100" : "md:opacity-35"}`}
+              >
                 {item.description}
-              </motion.p>
+              </p>
             </div>
           ))}
+          {/* zapas pod ostatnim krokiem, żeby panel trzymał się środka ekranu także przy kroku 3 */}
+          <div aria-hidden="true" className="hidden h-[26vh] md:block" />
         </div>
 
         <div className="hidden md:block">
-          <div className="sticky top-[calc(50vh-15rem)] h-[30rem] overflow-hidden rounded-[30px] ring-1 ring-white/10 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9)]">
+          <div className="sticky top-[calc(50vh-15rem)] h-[30rem] overflow-hidden rounded-[30px] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/10">
             <AnimatePresence mode="popLayout">
               <motion.div
                 key={active}
