@@ -148,7 +148,7 @@ export default function Home() {
                 className="text-balance text-[clamp(46px,7vw,84px)] font-semibold leading-[1.02] tracking-[-0.04em]"
               />
               <p className="mx-auto mt-6 max-w-[30ch] text-[clamp(20px,2.2vw,24px)] leading-[1.35] text-muted-dark lg:mx-0">
-                Klient dzwoni o 3 w nocy. Po minucie masz SMS z adresem i opisem awarii.
+                Klient dzwoni o 3 w nocy. Po minucie masz SMS z adresem i opisem sprawy.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-3.5 lg:justify-start">
                 <a href={`tel:${site.demoPhone}`} className={`${pill} bg-amber text-ink`}>Zadzwoń do demo</a>
