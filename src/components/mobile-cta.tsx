@@ -40,15 +40,15 @@ export function MobileCta() {
           <div className="flex gap-2.5">
             <a
               href={`tel:${site.demoPhone}`}
-              className="flex min-h-12 flex-1 items-center justify-center rounded-full bg-amber font-semibold text-ink transition-transform active:scale-95"
+              className="flex min-h-12 flex-1 items-center justify-center whitespace-nowrap rounded-full bg-amber px-4 text-[16px] font-semibold text-ink transition-transform active:scale-95"
             >
               Zadzwoń do demo
             </a>
             <a
               href={site.calendlyUrl}
-              className="flex min-h-12 items-center justify-center rounded-full border border-white/20 px-5 font-semibold text-parchment transition-transform active:scale-95"
+              className="flex min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-white/20 px-4 text-[16px] font-semibold text-parchment transition-transform active:scale-95"
             >
-              Umów rozmowę
+              Umów się
             </a>
           </div>
         </motion.div>
