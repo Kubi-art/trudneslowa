@@ -88,7 +88,7 @@ const withoutUs = [
 const withUs = [
   ["3:14", "NOKTURN odbiera po pierwszym sygnale."],
   ["3:15", "Klient opisuje problem i podaje adres."],
-  ["3:15", "Twój telefon budzi SMS z opisem awarii."],
+  ["3:15", "Twój telefon budzi SMS z opisem sprawy."],
   ["3:20", "Oddzwaniasz i potwierdzasz przyjazd."],
 ];
 
@@ -185,7 +185,7 @@ export default function Home() {
                 className={`${h2} mt-5 max-w-[18ch] text-[clamp(28px,3.2vw,40px)]`}
               />
               <p className="mt-4 max-w-[40ch] text-[19px] text-muted">
-                Klient w awarii nie zostawia wiadomości. Dzwoni do następnej firmy z listy.
+                Klient z pilną sprawą nie zostawia wiadomości. Dzwoni do następnej firmy z listy.
               </p>
               <p className="mt-6 text-xs text-[#86868b]">Źródło: raport Fachowcy.pl Ventures, badanie 400 firm.</p>
             </div>
