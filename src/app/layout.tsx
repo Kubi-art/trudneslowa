@@ -17,6 +17,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#000000",
+  // potrzebne, żeby env(safe-area-inset-bottom) działało na iPhonie (pasek na dole ekranu)
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
