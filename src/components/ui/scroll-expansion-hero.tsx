@@ -57,7 +57,7 @@ export default function ScrollExpandMedia({
       <section className="bg-[#09090b] text-parchment">
         <div className="relative h-[80vh] min-h-[480px] w-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={mediaSrc} alt={alt} className="h-full w-full object-cover" />
+          <img src={mediaType === "video" ? posterSrc ?? bgImageSrc : mediaSrc} alt={alt} className="h-full w-full object-cover" />
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-6 text-center">
             <h2 className="text-balance text-[clamp(40px,7vw,96px)] font-semibold leading-none tracking-[-0.04em]">{title}</h2>
           </div>

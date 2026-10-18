@@ -71,7 +71,11 @@ export function TextReveal({
               key={i}
               className="inline-block"
               initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-              animate={active ? { opacity: 1, y: 0, filter: "blur(0px)" } : undefined}
+              animate={
+                active
+                  ? { opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none", transform: "none" } }
+                  : undefined
+              }
               transition={{ duration: 0.6, delay: index * step, ease: [0.2, 0.65, 0.3, 0.9] }}
             >
               {unit}

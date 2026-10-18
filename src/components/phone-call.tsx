@@ -61,11 +61,11 @@ export function PhoneCall() {
         <AnimatePresence>
           {done && (
             <motion.div
-              initial={{ opacity: 0, y: -40, scale: 0.94 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: -40 }}
+              animate={{ opacity: 1, y: 0, transitionEnd: { transform: "none" } }}
               exit={{ opacity: 0, y: -40 }}
               transition={{ type: "spring", stiffness: 300, damping: 26 }}
-              className="absolute inset-x-2.5 top-12 z-10 flex flex-col gap-[3px] rounded-[22px] bg-[rgba(245,245,247,0.92)] px-3.5 py-3 text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+              className="absolute inset-x-2.5 top-12 z-10 flex flex-col gap-[3px] rounded-[22px] bg-[#f2f2f4] px-3.5 py-3 text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             >
               <div className="flex justify-between text-[12px] text-muted">
                 <strong className="font-semibold text-ink">Wiadomości · NOKTURN</strong>
@@ -91,9 +91,8 @@ export function PhoneCall() {
               {visible.map((m) => (
                 <motion.div
                   key={m.text}
-                  layout
-                  initial={{ opacity: 0, y: 12, scale: 0.97 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0, transitionEnd: { transform: "none" } }}
                   transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
                   className={
                     m.from === "bot"

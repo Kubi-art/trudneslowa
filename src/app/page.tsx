@@ -23,7 +23,8 @@ function StepImage({ src, alt, children }: { src: string; alt: string; children?
     <div className="relative h-full w-full">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} alt={alt} className="h-full w-full object-cover" />
-      {children && <div className="absolute inset-x-4 bottom-4">{children}</div>}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
+      {children && <div className="absolute inset-x-5 bottom-5">{children}</div>}
     </div>
   );
 }
@@ -32,14 +33,21 @@ const steps = [
   {
     title: "1. Rozmawiamy 15 minut",
     description: "Mówisz, czym się zajmujesz, gdzie jeździsz, ile bierzesz za dojazd i o co pytać klienta. Resztę ustawiamy my.",
-    content: <StepImage src={images.tradesmanCall} alt="Fachowiec rozmawia przez telefon przy swoim busie" />,
+    content: (
+      <StepImage src={images.tradesmanCall} alt="Fachowiec rozmawia przez telefon przy swoim busie">
+        <div className="flex flex-col gap-2 text-[14px] leading-snug">
+          <p className="max-w-[80%] self-start rounded-2xl bg-[#2c2c2e] px-3.5 py-2.5 text-parchment">Ile bierzesz za dojazd w nocy i do jakich miejscowości jeździsz?</p>
+          <p className="max-w-[80%] self-end rounded-2xl bg-amber px-3.5 py-2.5 text-ink">150 zł, Nowy Dwór i 25 km dookoła.</p>
+        </div>
+      </StepImage>
+    ),
   },
   {
     title: "2. Włączasz przekierowanie",
     description: "Numer zostaje Twój. Wpisujesz jeden kod w telefonie: gdy nie odbierasz, rozmowę przejmuje NOKTURN. Działa w każdej sieci.",
     content: (
       <StepImage src={images.dialing} alt="Dłonie wpisujące kod na klawiaturze telefonu">
-        <code className="block rounded-2xl bg-black/70 px-4 py-3 text-center font-mono text-[17px] tracking-wide text-parchment backdrop-blur-md">
+        <code className="block rounded-2xl bg-[#0b0b0d]/90 px-4 py-3 text-center font-mono text-[17px] tracking-wide text-parchment">
           **61*<span className="text-amber">numer NOKTURNA</span>#
         </code>
       </StepImage>
@@ -50,7 +58,7 @@ const steps = [
     description: "Co się stało, gdzie i jak pilne. Telefon budzi Cię tylko wtedy, gdy naprawdę trzeba. Oddzwaniasz, kiedy możesz.",
     content: (
       <StepImage src={images.bedsideSms} alt="Telefon na szafce nocnej wyświetla powiadomienie">
-        <div className="rounded-2xl bg-[rgba(245,245,247,0.92)] px-3.5 py-3 text-[13px] leading-snug text-ink backdrop-blur-md">
+        <div className="rounded-2xl bg-[#f2f2f4] px-3.5 py-3 text-[14px] leading-snug text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
           <strong className="font-semibold">Pilne:</strong> zatrzaśnięte drzwi, Kwiatowa 9, klient czeka na klatce.
         </div>
       </StepImage>
@@ -155,8 +163,9 @@ export default function Home() {
 
         {/* ZDJĘCIE: rośnie na cały ekran przy przewijaniu */}
         <ScrollExpandMedia
-          mediaType="image"
-          mediaSrc={images.plumber}
+          mediaType="video"
+          mediaSrc={images.plumberVideo}
+          posterSrc={images.plumber}
           bgImageSrc={images.nightBlocks}
           alt="Hydraulik pod zlewem, obok na podłodze dzwoni telefon"
           title="Ty pracujesz. My odbieramy."
@@ -220,7 +229,7 @@ export default function Home() {
             <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Działa w tydzień. Ty nic nie ustawiasz.</h2>
           </div>
           <StickyScroll content={steps} />
-          <div className="h-16" />
+          <div className="h-20" />
         </section>
 
         {/* PORÓWNANIE */}
