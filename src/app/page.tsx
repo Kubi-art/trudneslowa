@@ -133,7 +133,7 @@ export default function Home() {
 
       <main id="tresc">
         {/* HERO: noc nad osiedlem, jedno światło, telefon */}
-        <section className="relative overflow-hidden bg-[#09090b] text-parchment">
+        <section id="top" className="relative overflow-hidden bg-[#09090b] text-parchment">
           <AmberGlow />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] opacity-90">
             <NightCity density={0.045} />
