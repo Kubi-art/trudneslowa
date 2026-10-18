@@ -4,11 +4,11 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const MESSAGES = [
-  { from: "bot", text: "Dzień dobry, pogotowie hydrauliczne. Jestem wirtualnym asystentem, rozmowa jest nagrywana. W czym pomóc?" },
-  { from: "client", text: "Pękła rura pod zlewem, woda leje się na podłogę." },
-  { from: "bot", text: "Proszę zakręcić główny zawór. Pod jaki adres przyjechać?" },
-  { from: "client", text: "Lipowa 4, mieszkanie 12, Nowy Dwór." },
-  { from: "bot", text: "Zapisane. Fachowiec oddzwoni za kilka minut." },
+  { from: "bot", text: "Dzień dobry, firma Kowalski. Jestem wirtualnym asystentem, rozmowa jest nagrywana. W czym mogę pomóc?" },
+  { from: "client", text: "Mam awarię i potrzebuję kogoś jeszcze dziś." },
+  { from: "bot", text: "Rozumiem. Co dokładnie się stało i pod jaki adres przyjechać?" },
+  { from: "client", text: "Nic nie działa od godziny. Lipowa 4, Nowy Dwór." },
+  { from: "bot", text: "Zapisane jako pilne. Właściciel oddzwoni za kilka minut." },
 ] as const;
 
 const FINAL_STEP = MESSAGES.length + 1;
@@ -72,7 +72,7 @@ export function PhoneCall() {
                 <span>teraz</span>
               </div>
               <p className="text-[13px] leading-[1.35]">
-                <strong className="font-semibold">Pilne:</strong> pęknięta rura, woda na podłodze. Lipowa 4/12, Nowy Dwór. Zawór zakręcony. Oddzwoń: 600 *** ***
+                <strong className="font-semibold">Pilne:</strong> nowe zgłoszenie, awaria od godziny. Lipowa 4, Nowy Dwór. Oddzwoń: 600 *** ***
               </p>
             </motion.div>
           )}
@@ -80,7 +80,7 @@ export function PhoneCall() {
 
         <div className="flex shrink-0 flex-col items-center gap-0.5 pb-3 pt-5 text-center">
           <span className="text-[12px] text-muted-dark">{done ? "połączenie zakończone" : "rozmowa w toku"}</span>
-          <span className="text-[20px] font-semibold tracking-[-0.02em] text-parchment">Pogotowie hydrauliczne</span>
+          <span className="text-[20px] font-semibold tracking-[-0.02em] text-parchment">Firma Kowalski</span>
         </div>
 
         {/* rozmowa: stała wysokość, wiadomości od dołu */}

@@ -59,7 +59,7 @@ const steps = [
     content: (
       <StepImage src={images.bedsideSms} alt="Telefon na szafce nocnej wyświetla powiadomienie">
         <div className="rounded-2xl bg-[#f2f2f4] px-3.5 py-3 text-[14px] leading-snug text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-          <strong className="font-semibold">Pilne:</strong> zatrzaśnięte drzwi, Kwiatowa 9, klient czeka na klatce.
+          <strong className="font-semibold">Pilne:</strong> nowe zgłoszenie, Kwiatowa 9. Klient czeka na kontakt.
         </div>
       </StepImage>
     ),
@@ -87,14 +87,14 @@ const withoutUs = [
 ];
 const withUs = [
   ["3:14", "NOKTURN odbiera po pierwszym sygnale."],
-  ["3:15", "Klient zakręca zawór i podaje adres."],
+  ["3:15", "Klient opisuje problem i podaje adres."],
   ["3:15", "Twój telefon budzi SMS z opisem awarii."],
   ["3:20", "Oddzwaniasz i potwierdzasz przyjazd."],
 ];
 
 const features = [
   { Icon: ChatCircleText, title: "Rozmawia po polsku", text: "Naturalnie i spokojnie, bez menu „wciśnij 1”. Rozumie też zdenerwowanego klienta.", span: "lg:col-span-2" },
-  { Icon: WarningCircle, title: "Odróżnia pilne od zwykłych", text: "Zalanie oznacza jako pilne. Wymianę baterii w przyszłym tygodniu po prostu zapisuje.", span: "" },
+  { Icon: WarningCircle, title: "Odróżnia pilne od zwykłych", text: "Awarię oznacza jako pilną. Zwykłe pytanie o termin po prostu zapisuje.", span: "" },
   { Icon: UsersThree, title: "Kilka rozmów naraz", text: "Gdy po burzy dzwoni pięć osób, każda słyszy odpowiedź, a nie sygnał zajętości.", span: "" },
   { Icon: MapPinArea, title: "Zna Twoje ceny i rejon", text: "Mówi tylko to, co mu przekażesz: koszt dojazdu, godziny, miejscowości.", span: "" },
   { Icon: ArrowsLeftRight, title: "Przełącza do Ciebie", text: "Gdy klient chce rozmawiać z człowiekiem, a Ty możesz odebrać, łączy rozmowę.", span: "" },
@@ -140,7 +140,7 @@ export default function Home() {
 
           <div className={`${wrap} relative grid items-center gap-14 pb-24 pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:pb-32 lg:pt-28`}>
             <div className="text-center lg:text-left">
-              <p className="mb-3 text-[19px] font-semibold text-amber">Pogotowie, ślusarz, laweta. Całą dobę.</p>
+              <p className="mb-3 text-[19px] font-semibold text-amber">Wirtualny asystent telefoniczny. Całą dobę.</p>
               <TextReveal
                 as="h1"
                 startOnView={false}
@@ -167,9 +167,9 @@ export default function Home() {
           mediaSrc={images.plumberVideo}
           posterSrc={images.plumberPoster}
           bgImageSrc={images.nightBlocks}
-          alt="Hydraulik pod zlewem, obok na podłodze dzwoni telefon"
+          alt="Fachowiec przy pracy, obok na podłodze leży telefon"
           title="Ty pracujesz. My odbieramy."
-          date="Telefon dzwoni, a Ty masz ręce pod zlewem."
+          date="Telefon dzwoni, a Ty masz pełne ręce roboty."
           scrollToExpand="Przewiń w dół"
           textBlend
         />
@@ -236,7 +236,7 @@ export default function Home() {
         <section className="bg-parchment py-28">
           <div className={wrap}>
             <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Ta sama noc. Dwa zakończenia.</h2>
-            <p className="mx-auto mb-14 mt-3.5 max-w-[34ch] text-center text-[21px] text-muted">Klient dzwoni o 3:14, bo zalało mu łazienkę.</p>
+            <p className="mx-auto mb-14 mt-3.5 max-w-[34ch] text-center text-[21px] text-muted">Klient dzwoni o 3:14 z pilną sprawą.</p>
             <div className="grid gap-5 md:grid-cols-2">
               <div className="flex flex-col gap-6 rounded-[22px] bg-white px-8 py-9">
                 <h3 className="text-2xl font-semibold tracking-[-0.02em] text-muted">Bez NOKTURNA</h3>

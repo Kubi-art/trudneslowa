@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: "NOKTURN | Odbiera telefony, kiedy Ty nie możesz",
   description:
-    "Wirtualny asystent dla pogotowia hydraulicznego, ślusarzy i pomocy drogowej. Odbiera telefony całą dobę i wysyła Ci SMS ze zgłoszeniem.",
+    "Wirtualny asystent, który odbiera telefony Twojej firmy całą dobę i wysyła Ci SMS z każdym zgłoszeniem.",
   openGraph: {
     title: "NOKTURN | Odbiera, kiedy Ty nie możesz",
     description: "Telefon od klienta o 3 w nocy. Zgłoszenie u Ciebie w SMS-ie po minucie.",
