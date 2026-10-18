@@ -33,7 +33,7 @@ export function StickyScroll({ content }: { content: Item[] }) {
   }, [content.length]);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-clip">
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
