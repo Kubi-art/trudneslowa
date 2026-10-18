@@ -17,6 +17,7 @@ import { TextReveal } from "@/components/ui/text-reveal";
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
 import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
 import { images } from "@/lib/images";
+import { MobileCta } from "@/components/mobile-cta";
 
 function StepImage({ src, alt, children }: { src: string; alt: string; children?: React.ReactNode }) {
   return (
@@ -112,6 +113,7 @@ export default function Home() {
   return (
     <>
       <div className="grain" aria-hidden="true" />
+      <MobileCta />
 
       <header className="sticky top-0 z-40 bg-black/75 backdrop-blur-xl backdrop-saturate-150">
         <nav aria-label="Główna" className="mx-auto flex h-12 max-w-[1080px] items-center justify-between gap-4 px-5">
@@ -346,7 +348,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-parchment px-5 pb-10 pt-6 text-xs leading-relaxed text-muted">
+      <footer className="bg-parchment px-5 pb-28 pt-6 text-xs leading-relaxed text-muted md:pb-10">
         <div className="mx-auto flex max-w-[1080px] flex-col gap-3">
           <p className="border-b border-[#d2d2d7] pb-3">
             Rozmowy prowadzi wirtualny asystent. Klient jest o tym informowany na początku połączenia.

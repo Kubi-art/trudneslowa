@@ -83,3 +83,21 @@ input[type="range"] {
   background-image: radial-gradient(rgba(29, 29, 31, 0.09) 1px, transparent 1px);
   background-size: 22px 22px;
 }
+
+/* Dokumenty prawne */
+.legal p,
+.legal li {
+  color: #424245;
+  max-width: 68ch;
+}
+.legal ul,
+.legal ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+}
+.legal ul { list-style: disc; }
+.legal ol { list-style: decimal; }
+.legal strong { color: var(--color-ink); font-weight: 600; }
+.legal a { color: var(--color-amber-deep); text-decoration: underline; text-underline-offset: 3px; }
