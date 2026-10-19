@@ -72,7 +72,7 @@ export function PhoneCall() {
                 <span>teraz</span>
               </div>
               <p className="text-[13px] leading-[1.35]">
-                <strong className="font-semibold">Pilne:</strong> nowe zgłoszenie, awaria od godziny. Lipowa 4, Nowy Dwór. Oddzwoń: 600 *** ***
+                <strong className="font-semibold">Pilne:</strong> nowe zgłoszenie, awaria od godziny. Lipowa 4, Nowy Dwór. Oddzwoń: 512 ••• •••
               </p>
             </motion.div>
           )}

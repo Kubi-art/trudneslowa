@@ -1,6 +1,6 @@
 // Źródło: "Number Ticker Currency Counter" z 21st.dev (ShadcnSpace, licencja MIT)
 // https://github.com/shadcnspace/shadcnspace  src/components/shadcn-space/number-ticker/number-ticker-02.tsx
-// Komponent przeniesiony bez zmian; usunięte tylko demo.
+// Komponent przeniesiony z dwiema zmianami: usunięte demo, dodany parametr locales (polski zapis "300 zł").
 "use client";
 
 import NumberFlow, { type Value } from "@number-flow/react";
@@ -9,6 +9,7 @@ type NumberTickerProps = {
   value: Value;
   currency?: string;
   decimals?: number;
+  locales?: string;
   className?: string;
 };
 
@@ -20,12 +21,14 @@ function NumberTicker({
   value,
   currency = "USD",
   decimals = 2,
+  locales,
   className,
 }: NumberTickerProps) {
   return (
     <div className="inline-flex items-center gap-3">
       <NumberFlow
         value={value}
+        locales={locales}
         format={{
           style: "currency",
           currency: currency,

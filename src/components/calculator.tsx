@@ -85,6 +85,7 @@ export function Calculator() {
           value={lost}
           currency="PLN"
           decimals={0}
+          locales="pl-PL"
           className="text-[clamp(56px,7vw,80px)] font-semibold leading-[1.05] tracking-[-0.04em] tabular-nums"
         />
         <p className="text-muted">
