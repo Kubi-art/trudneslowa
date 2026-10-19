@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo, LogoMark } from "@/components/logo";
 import {
   ArrowsLeftRight,
   ChatCircleText,
@@ -117,8 +118,8 @@ export default function Home() {
 
       <header className="sticky top-0 z-40 bg-black/75 backdrop-blur-xl backdrop-saturate-150">
         <nav aria-label="Główna" className="mx-auto flex h-12 max-w-[1080px] items-center justify-between gap-4 px-5">
-          <Link href="/" className="text-[15px] font-semibold tracking-[0.08em] text-parchment">
-            NOKTURN
+          <Link href="/" aria-label="NOKTURN, strona główna" className="text-[15px] text-parchment">
+            <Logo />
           </Link>
           <div className="flex items-center gap-5 text-[13px]">
             <a href="#jak" className="hidden text-[#d2d2d7] hover:text-white sm:inline">Jak działa</a>
@@ -354,7 +355,7 @@ export default function Home() {
             Rozmowy prowadzi wirtualny asystent. Klient jest o tym informowany na początku połączenia.
           </p>
           <div className="flex flex-wrap justify-between gap-x-6 gap-y-2">
-            <span>© 2026 NOKTURN. {site.company}, NIP {site.nip}.</span>
+            <span className="inline-flex items-center gap-2"><LogoMark size={14} dark={false} />© 2026 NOKTURN. {site.company}, NIP {site.nip}.</span>
             <nav aria-label="Informacje prawne" className="flex flex-wrap gap-x-5 gap-y-2 text-[#424245]">
               <Link href="/polityka-prywatnosci" className="hover:underline">Polityka prywatności</Link>
               <Link href="/regulamin" className="hover:underline">Regulamin</Link>
