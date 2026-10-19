@@ -33,30 +33,30 @@ function StepImage({ src, alt, children }: { src: string; alt: string; children?
 const steps = [
   {
     title: "1. Rozmawiamy 15 minut",
-    description: "Mówisz, czym się zajmujesz, gdzie jeździsz, ile bierzesz za dojazd i o co pytać klienta. Resztę ustawiamy my.",
+    description: "Mówisz, czym zajmuje się Twoja firma, gdzie działasz, jakie masz ceny i o co pytać klienta. Resztę ustawiamy my.",
     content: (
       <StepImage src={images.tradesmanCall} alt="Fachowiec rozmawia przez telefon przy swoim busie">
         <div className="flex flex-col gap-2 text-[14px] leading-snug">
-          <p className="max-w-[80%] self-start rounded-2xl bg-[#2c2c2e] px-3.5 py-2.5 text-parchment">Ile bierzesz za dojazd w nocy i do jakich miejscowości jeździsz?</p>
-          <p className="max-w-[80%] self-end rounded-2xl bg-amber px-3.5 py-2.5 text-ink">150 zł, Nowy Dwór i 25 km dookoła.</p>
+          <p className="max-w-[80%] self-start rounded-2xl bg-[#2c2c2e] px-3.5 py-2.5 text-parchment">Gdzie działasz i ile kosztuje przyjazd w nocy?</p>
+          <p className="max-w-[80%] self-end rounded-2xl bg-amber px-3.5 py-2.5 text-ink">Nowy Dwór i 25 km dookoła. W nocy 150 zł.</p>
         </div>
       </StepImage>
     ),
   },
   {
     title: "2. Włączasz przekierowanie",
-    description: "Numer zostaje Twój. Wpisujesz jeden kod w telefonie: gdy nie odbierasz, rozmowę przejmuje NOKTURN. Działa w każdej sieci.",
+    description: "Numer zostaje Twój. Wpisujesz jeden kod w telefonie: gdy nie odbierasz, masz zajęte albo jesteś poza zasięgiem, rozmowę przejmuje NOKTURN.",
     content: (
       <StepImage src={images.dialing} alt="Dłonie wpisujące kod na klawiaturze telefonu">
         <code className="block rounded-2xl bg-[#0b0b0d]/90 px-4 py-3 text-center font-mono text-[17px] tracking-wide text-parchment">
-          **61*<span className="text-amber">numer NOKTURNA</span>#
+          **004*<span className="text-amber">numer NOKTURNA</span>#
         </code>
       </StepImage>
     ),
   },
   {
     title: "3. Dostajesz SMS-y",
-    description: "Co się stało, gdzie i jak pilne. Telefon budzi Cię tylko wtedy, gdy naprawdę trzeba. Oddzwaniasz, kiedy możesz.",
+    description: "Po każdej rozmowie dostajesz SMS: co się stało, gdzie i jak pilne. Oddzwaniasz, kiedy możesz.",
     content: (
       <StepImage src={images.bedsideSms} alt="Telefon na szafce nocnej wyświetla powiadomienie">
         <div className="rounded-2xl bg-[#f2f2f4] px-3.5 py-3 text-[14px] leading-snug text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
@@ -87,26 +87,26 @@ const withoutUs = [
   ["7:40", "Widzisz nieodebrane połączenie. Oddzwaniasz, ale jest po wszystkim."],
 ];
 const withUs = [
-  ["3:14", "NOKTURN odbiera po pierwszym sygnale."],
+  ["3:14", "Nie odbierasz. Po kilku sygnałach rozmowę przejmuje NOKTURN."],
   ["3:15", "Klient opisuje problem i podaje adres."],
   ["3:15", "Twój telefon budzi SMS z opisem sprawy."],
-  ["3:20", "Oddzwaniasz i potwierdzasz przyjazd."],
+  ["3:20", "Oddzwaniasz i umawiasz się z klientem."],
 ];
 
 const features = [
   { Icon: ChatCircleText, title: "Rozmawia po polsku", text: "Naturalnie i spokojnie, bez menu „wciśnij 1”. Rozumie też zdenerwowanego klienta.", span: "lg:col-span-2" },
   { Icon: WarningCircle, title: "Odróżnia pilne od zwykłych", text: "Awarię oznacza jako pilną. Zwykłe pytanie o termin po prostu zapisuje.", span: "" },
-  { Icon: UsersThree, title: "Kilka rozmów naraz", text: "Gdy po burzy dzwoni pięć osób, każda słyszy odpowiedź, a nie sygnał zajętości.", span: "" },
-  { Icon: MapPinArea, title: "Zna Twoje ceny i rejon", text: "Mówi tylko to, co mu przekażesz: koszt dojazdu, godziny, miejscowości.", span: "" },
-  { Icon: ArrowsLeftRight, title: "Przełącza do Ciebie", text: "Gdy klient chce rozmawiać z człowiekiem, a Ty możesz odebrać, łączy rozmowę.", span: "" },
+  { Icon: UsersThree, title: "Kilka rozmów naraz", text: "Gdy kilka osób dzwoni w tej samej chwili, każda słyszy odpowiedź, a nie sygnał zajętości.", span: "" },
+  { Icon: MapPinArea, title: "Zna Twoje ceny i rejon", text: "Mówi tylko to, co mu przekażesz: ceny, godziny pracy i obszar, na którym działasz.", span: "" },
+  { Icon: ArrowsLeftRight, title: "Przełącza do Ciebie", text: "Gdy klient chce rozmawiać z człowiekiem, przełącza rozmowę na numer, który wskażesz.", span: "" },
   { Icon: EnvelopeSimple, title: "Zapis każdej rozmowy", text: "Poza SMS-em dostajesz mailem pełny zapis, więc wiesz dokładnie, co klient powiedział.", span: "lg:col-span-2" },
 ];
 
 const faq = [
   ["Czy klient wie, że rozmawia z AI?", "Tak. Asystent mówi o tym na początku i informuje o nagrywaniu, bo tego wymaga prawo."],
-  ["Czy muszę zmieniać numer?", "Nie. Włączasz przekierowanie, gdy nie odbierasz. Jak odbierzesz sam, nic się nie zmienia."],
+  ["Czy muszę zmieniać numer?", "Nie. Ustawiasz tylko przekierowanie: gdy nie odbierzesz, rozmowa trafia do NOKTURNA. Gdy odbierzesz sam, wszystko działa jak dotąd."],
   ["Co, jeśli czegoś nie zrozumie?", "Zapisze numer i to, co usłyszał, a w SMS-ie dopisze, żeby oddzwonić."],
-  ["Mogę zrezygnować?", "Tak, z miesięcznym wypowiedzeniem. Wyłączasz przekierowanie i gotowe."],
+  ["Czy mogę zrezygnować?", "Tak, z miesięcznym wypowiedzeniem. Potem wyłączasz przekierowanie kodem ##004# i telefon działa jak wcześniej."],
 ];
 
 export default function Home() {
@@ -183,13 +183,13 @@ export default function Home() {
               <p className="text-[clamp(96px,14vw,184px)] font-semibold leading-[0.9] tracking-[-0.05em]">34%</p>
               <TextReveal
                 as="h2"
-                text="firm w Polsce nie odebrało telefonu od klienta."
+                text="badanych firm nie odebrało telefonu od klienta."
                 className={`${h2} mt-5 max-w-[18ch] text-[clamp(28px,3.2vw,40px)]`}
               />
               <p className="mt-4 max-w-[40ch] text-[19px] text-muted">
                 Klient z pilną sprawą nie zostawia wiadomości. Dzwoni do następnej firmy z listy.
               </p>
-              <p className="mt-6 text-xs text-[#86868b]">Źródło: raport Fachowcy.pl Ventures, badanie 400 firm.</p>
+              <p className="mt-6 text-xs text-[#86868b]">Źródło: raport Fachowcy.pl Ventures (2016), badanie 400 polskich firm.</p>
             </div>
 
             <div className="mx-auto w-full max-w-[420px] rounded-[28px] bg-white p-2 shadow-[0_30px_60px_-30px_rgba(29,29,31,0.35)]">
@@ -210,7 +210,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-2 text-center text-[13px] text-muted">Tak wygląda telefon fachowca rano. Każda pozycja to klient, który zadzwonił gdzie indziej.</p>
+                <p className="mt-2 text-center text-[13px] text-muted">Tak wygląda rano telefon zapracowanego właściciela firmy. Każda pozycja to klient, który potem zadzwonił gdzie indziej.</p>
               </div>
             </div>
           </div>
@@ -228,7 +228,7 @@ export default function Home() {
         {/* JAK DZIAŁA: kroki z przypiętym zdjęciem */}
         <section id="jak" className="scroll-mt-12 bg-graphite text-parchment">
           <div className="mx-auto max-w-[1080px] px-5 pt-28">
-            <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Działa w tydzień. Ty nic nie ustawiasz.</h2>
+            <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Działa w tydzień. Ty wpisujesz tylko jeden kod.</h2>
           </div>
           <StickyScroll content={steps} />
           <div className="h-20" />
@@ -336,7 +336,7 @@ export default function Home() {
           <div className={`${wrap} relative`}>
             <TextReveal
               as="h2"
-              text="Następny nocny telefon może być do Ciebie."
+              text="Następny nocny telefon odbierzemy za Ciebie."
               className={`${h2} mx-auto max-w-[16ch] text-[clamp(36px,5.4vw,64px)] leading-[1.05]`}
             />
             <p className="mx-auto mt-[18px] max-w-[36ch] text-[21px] text-muted-dark">15 minut rozmowy. Pokażemy to na Twoim przykładzie.</p>
@@ -354,7 +354,7 @@ export default function Home() {
             Rozmowy prowadzi wirtualny asystent. Klient jest o tym informowany na początku połączenia.
           </p>
           <div className="flex flex-wrap justify-between gap-x-6 gap-y-2">
-            <span>Copyright 2026 NOKTURN. {site.company}, NIP {site.nip}.</span>
+            <span>© 2026 NOKTURN. {site.company}, NIP {site.nip}.</span>
             <nav aria-label="Informacje prawne" className="flex flex-wrap gap-x-5 gap-y-2 text-[#424245]">
               <Link href="/polityka-prywatnosci" className="hover:underline">Polityka prywatności</Link>
               <Link href="/regulamin" className="hover:underline">Regulamin</Link>

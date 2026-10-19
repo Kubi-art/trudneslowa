@@ -4,11 +4,11 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const MESSAGES = [
-  { from: "bot", text: "Dzień dobry, firma Kowalski. Jestem wirtualnym asystentem, rozmowa jest nagrywana. W czym mogę pomóc?" },
-  { from: "client", text: "Mam awarię i potrzebuję kogoś jeszcze dziś." },
-  { from: "bot", text: "Rozumiem. Co dokładnie się stało i pod jaki adres przyjechać?" },
-  { from: "client", text: "Nic nie działa od godziny. Lipowa 4, Nowy Dwór." },
-  { from: "bot", text: "Zapisane jako pilne. Właściciel oddzwoni za kilka minut." },
+  { from: "bot", text: "Dzień dobry, tu firma Kowalski. Jestem wirtualnym asystentem, rozmowa jest nagrywana. W czym mogę pomóc?" },
+  { from: "client", text: "Mam awarię i potrzebuję kogoś jak najszybciej." },
+  { from: "bot", text: "Rozumiem. Co się stało i pod jakim adresem?" },
+  { from: "client", text: "Od godziny nic nie działa. Lipowa 4 w Nowym Dworze." },
+  { from: "bot", text: "Zapisałem zgłoszenie jako pilne. Ktoś z firmy oddzwoni w ciągu kilku minut." },
 ] as const;
 
 const FINAL_STEP = MESSAGES.length + 1;
@@ -68,7 +68,7 @@ export function PhoneCall() {
               className="absolute inset-x-2.5 top-12 z-10 flex flex-col gap-[3px] rounded-[22px] bg-[#f2f2f4] px-3.5 py-3 text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             >
               <div className="flex justify-between text-[12px] text-muted">
-                <strong className="font-semibold text-ink">Wiadomości · NOKTURN</strong>
+                <strong className="font-semibold text-ink">SMS od NOKTURNA</strong>
                 <span>teraz</span>
               </div>
               <p className="text-[13px] leading-[1.35]">
@@ -79,8 +79,8 @@ export function PhoneCall() {
         </AnimatePresence>
 
         <div className="flex shrink-0 flex-col items-center gap-0.5 pb-3 pt-5 text-center">
-          <span className="text-[12px] text-muted-dark">{done ? "połączenie zakończone" : "rozmowa w toku"}</span>
-          <span className="text-[20px] font-semibold tracking-[-0.02em] text-parchment">Firma Kowalski</span>
+          <span className="text-[12px] text-muted-dark">{done ? "rozmowa zakończona" : "NOKTURN odbiera za Ciebie"}</span>
+          <span className="text-[20px] font-semibold tracking-[-0.02em] text-parchment">+48 512 ••• •••</span>
         </div>
 
         {/* rozmowa: stała wysokość, wiadomości od dołu */}

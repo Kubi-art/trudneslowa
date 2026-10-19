@@ -7,6 +7,15 @@ import { useId, useState } from "react";
 
 const WEEKS_PER_MONTH = 4.3;
 
+// Polska odmiana: 1 zlecenie, 2–4 zlecenia (ale 12–14 zleceń), 5+ zleceń
+function zlecenia(n: number) {
+  if (n === 1) return "zlecenie";
+  const d = n % 10;
+  const dd = n % 100;
+  if (d >= 2 && d <= 4 && !(dd >= 12 && dd <= 14)) return "zlecenia";
+  return "zleceń";
+}
+
 function Slider({
   label,
   value,
@@ -67,7 +76,7 @@ export function Calculator() {
           step={50}
           onChange={setValue}
         />
-        <Slider label="Ile telefonów kończy się zleceniem" value={conv} display={`${conv}%`} min={10} max={80} step={5} onChange={setConv} />
+        <Slider label="Ile z nich byłoby zleceniem" value={conv} display={`${conv}%`} min={10} max={80} step={5} onChange={setConv} />
       </div>
 
       <div className="flex min-h-[280px] flex-col items-center justify-center gap-1.5 rounded-[18px] bg-parchment p-8 text-center">
@@ -79,7 +88,13 @@ export function Calculator() {
           className="text-[clamp(56px,7vw,80px)] font-semibold leading-[1.05] tracking-[-0.04em] tabular-nums"
         />
         <p className="text-muted">
-          czyli około <NumberFlow value={jobs} locales="pl-PL" /> zleceń u konkurencji.
+          {jobs === 0 ? (
+            "czyli mniej niż jedno zlecenie w miesiącu."
+          ) : (
+            <>
+              czyli około <NumberFlow value={jobs} locales="pl-PL" /> {zlecenia(jobs)}, które {jobs === 1 ? "trafia" : "trafiają"} do konkurencji.
+            </>
+          )}
         </p>
       </div>
     </div>
