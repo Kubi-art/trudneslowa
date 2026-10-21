@@ -5,10 +5,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const MESSAGES = [
   { from: "bot", text: "Dzień dobry, tu firma Kowalski. Jestem wirtualnym asystentem, rozmowa jest nagrywana. W czym mogę pomóc?" },
-  { from: "client", text: "Mam awarię i potrzebuję kogoś jak najszybciej." },
-  { from: "bot", text: "Rozumiem. Co się stało i pod jakim adresem?" },
-  { from: "client", text: "Od godziny nic nie działa. Lipowa 4 w Nowym Dworze." },
-  { from: "bot", text: "Zapisałem zgłoszenie jako pilne. Ktoś z firmy oddzwoni w ciągu kilku minut." },
+  { from: "client", text: "Dzień dobry, chciałbym umówić termin, najlepiej jeszcze w tym tygodniu." },
+  { from: "bot", text: "Oczywiście. Jak się Pan nazywa i kiedy Panu pasuje?" },
+  { from: "client", text: "Tomasz Nowak. Najlepiej czwartek po 16." },
+  { from: "bot", text: "Zapisałem: czwartek po 16. Ktoś z firmy oddzwoni i potwierdzi termin." },
 ] as const;
 
 const FINAL_STEP = MESSAGES.length + 1;
@@ -52,7 +52,7 @@ export function PhoneCall() {
       <div className="relative flex h-full flex-col overflow-hidden rounded-[44px] bg-[#0b0b0d] text-left">
         {/* pasek statusu */}
         <div className="flex shrink-0 items-center justify-between px-7 pt-4 text-[13px] font-semibold tabular-nums text-parchment">
-          <span>3:14</span>
+          <span>21:47</span>
           <span className="h-[25px] w-[88px] rounded-full bg-black" aria-hidden="true" />
           <span className="font-normal text-muted-dark">LTE</span>
         </div>
@@ -72,7 +72,7 @@ export function PhoneCall() {
                 <span>teraz</span>
               </div>
               <p className="text-[13px] leading-[1.35]">
-                <strong className="font-semibold">Pilne:</strong> nowe zgłoszenie, awaria od godziny. Lipowa 4, Nowy Dwór. Oddzwoń: 512 ••• •••
+                <strong className="font-semibold">Nowy klient:</strong> Tomasz Nowak chce umówić termin, czwartek po 16. Oddzwoń: 512 ••• •••
               </p>
             </motion.div>
           )}

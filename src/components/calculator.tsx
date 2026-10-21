@@ -7,13 +7,9 @@ import { useId, useState } from "react";
 
 const WEEKS_PER_MONTH = 4.3;
 
-// Polska odmiana: 1 zlecenie, 2–4 zlecenia (ale 12–14 zleceń), 5+ zleceń
-function zlecenia(n: number) {
-  if (n === 1) return "zlecenie";
-  const d = n % 10;
-  const dd = n % 100;
-  if (d >= 2 && d <= 4 && !(dd >= 12 && dd <= 14)) return "zlecenia";
-  return "zleceń";
+// Po „około” zawsze dopełniacz: około jednego klienta, około 2 klientów, około 5 klientów.
+function klientow(n: number) {
+  return n === 1 ? "jednego klienta" : null;
 }
 
 function Slider({
@@ -68,7 +64,7 @@ export function Calculator() {
       <div className="flex flex-col gap-[30px] rounded-[18px] border border-hairline bg-white p-8">
         <Slider label="Nieodebrane telefony w tygodniu" value={missed} display={missed} min={1} max={40} step={1} onChange={setMissed} />
         <Slider
-          label="Średnia wartość zlecenia"
+          label="Ile zarabiasz na jednym kliencie"
           value={value}
           display={new Intl.NumberFormat("pl-PL", pln).format(value)}
           min={100}
@@ -76,7 +72,7 @@ export function Calculator() {
           step={50}
           onChange={setValue}
         />
-        <Slider label="Ile z nich byłoby zleceniem" value={conv} display={`${conv}%`} min={10} max={80} step={5} onChange={setConv} />
+        <Slider label="Ilu z dzwoniących zostałoby klientami" value={conv} display={`${conv}%`} min={10} max={80} step={5} onChange={setConv} />
       </div>
 
       <div className="flex min-h-[280px] flex-col items-center justify-center gap-1.5 rounded-[18px] bg-parchment p-8 text-center">
@@ -90,10 +86,16 @@ export function Calculator() {
         />
         <p className="text-muted">
           {jobs === 0 ? (
-            "czyli mniej niż jedno zlecenie w miesiącu."
+            "czyli mniej niż jeden klient w miesiącu."
           ) : (
             <>
-              czyli około <NumberFlow value={jobs} locales="pl-PL" /> {zlecenia(jobs)}, które {jobs === 1 ? "trafia" : "trafiają"} do konkurencji.
+              {klientow(jobs) ? (
+                <>czyli około {klientow(jobs)}, który idzie do konkurencji.</>
+              ) : (
+                <>
+                  czyli około <NumberFlow value={jobs} locales="pl-PL" /> klientów, którzy idą do konkurencji.
+                </>
+              )}
             </>
           )}
         </p>

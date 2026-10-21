@@ -101,3 +101,37 @@ input[type="range"] {
 .legal ol { list-style: decimal; }
 .legal strong { color: var(--color-ink); font-weight: 600; }
 .legal a { color: var(--color-amber-deep); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Galeria branż: dwie kopie listy przesuwają się w nieskończoność; zatrzymuje się po najechaniu. */
+.marquee {
+  display: flex;
+  width: max-content;
+}
+.marquee-track {
+  animation: marquee 70s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    width: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: 20px;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .marquee-track[aria-hidden="true"] {
+    display: none;
+  }
+  .marquee-track > li {
+    scroll-snap-align: start;
+  }
+}

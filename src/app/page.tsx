@@ -36,10 +36,10 @@ const steps = [
     title: "1. Rozmawiamy 15 minut",
     description: "Mówisz, czym zajmuje się Twoja firma, gdzie działasz, jakie masz ceny i o co pytać klienta. Resztę ustawiamy my.",
     content: (
-      <StepImage src={images.tradesmanCall} alt="Fachowiec rozmawia przez telefon przy swoim busie">
+      <StepImage src={images.office} alt="Właścicielka firmy rozmawia przez telefon przy biurku i robi notatki">
         <div className="flex flex-col gap-2 text-[14px] leading-snug">
-          <p className="max-w-[80%] self-start rounded-2xl bg-[#2c2c2e] px-3.5 py-2.5 text-parchment">Gdzie działasz i ile kosztuje przyjazd w nocy?</p>
-          <p className="max-w-[80%] self-end rounded-2xl bg-amber px-3.5 py-2.5 text-ink">Nowy Dwór i 25 km dookoła. W nocy 150 zł.</p>
+          <p className="max-w-[80%] self-start rounded-2xl bg-[#2c2c2e] px-3.5 py-2.5 text-parchment">Co oferujesz i w jakich godzinach pracujesz?</p>
+          <p className="max-w-[80%] self-end rounded-2xl bg-amber px-3.5 py-2.5 text-ink">Pon.–pt. 8–18, sobota do 14. Cennik wyślę mailem.</p>
         </div>
       </StepImage>
     ),
@@ -57,11 +57,11 @@ const steps = [
   },
   {
     title: "3. Dostajesz SMS-y",
-    description: "Po każdej rozmowie dostajesz SMS: co się stało, gdzie i jak pilne. Oddzwaniasz, kiedy możesz.",
+    description: "Po każdej rozmowie dostajesz SMS: kto dzwonił, w jakiej sprawie i czy to pilne. Oddzwaniasz, kiedy możesz.",
     content: (
-      <StepImage src={images.bedsideSms} alt="Telefon na szafce nocnej wyświetla powiadomienie">
+      <StepImage src={images.bedside} alt="Telefon na szafce nocnej wyświetla powiadomienie">
         <div className="rounded-2xl bg-[#f2f2f4] px-3.5 py-3 text-[14px] leading-snug text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-          <strong className="font-semibold">Pilne:</strong> nowe zgłoszenie, Kwiatowa 9. Klient czeka na kontakt.
+          <strong className="font-semibold">Nowy klient:</strong> pyta o wolny termin w piątek. Oddzwoń: 512&nbsp;•••&nbsp;•••
         </div>
       </StepImage>
     ),
@@ -82,21 +82,34 @@ const missedCalls = [
 ];
 
 const withoutUs = [
-  ["3:14", "Telefon dzwoni w kurtce na krześle. Śpisz."],
-  ["3:15", "Klient nie zostawia wiadomości."],
-  ["3:16", "Dzwoni do następnej firmy z Google. Ta odbiera."],
-  ["7:40", "Widzisz nieodebrane połączenie. Oddzwaniasz, ale jest po wszystkim."],
+  ["14:05", "Telefon dzwoni w kieszeni. Masz zajęte ręce."],
+  ["14:06", "Klient nie zostawia wiadomości."],
+  ["14:07", "Dzwoni do następnej firmy z Google. Ta odbiera."],
+  ["17:30", "Widzisz nieodebrane połączenie. Oddzwaniasz, ale klient już się umówił gdzie indziej."],
 ];
 const withUs = [
-  ["3:14", "Nie odbierasz. Po kilku sygnałach rozmowę przejmuje NOKTURN."],
-  ["3:15", "Klient opisuje problem i podaje adres."],
-  ["3:15", "Twój telefon budzi SMS z opisem sprawy."],
-  ["3:20", "Oddzwaniasz i umawiasz się z klientem."],
+  ["14:05", "Nie odbierasz. Po kilku sygnałach rozmowę przejmuje NOKTURN."],
+  ["14:06", "Klient mówi, czego potrzebuje, i zostawia numer."],
+  ["14:06", "Dostajesz SMS z opisem sprawy."],
+  ["14:30", "Kończysz pracę, oddzwaniasz i umawiasz klienta."],
+];
+
+const trades = [
+  { src: images.hairdresser, name: "Salon fryzjerski", line: "Nożyczki w dłoniach, klientka na fotelu." },
+  { src: images.mechanic, name: "Warsztat", line: "Ręce w silniku, telefon na skrzynce." },
+  { src: images.dentist, name: "Gabinet", line: "Pacjent na fotelu. Nie odejdziesz." },
+  { src: images.bakery, name: "Piekarnia", line: "4:30 rano, ręce w cieście." },
+  { src: images.electrician, name: "Ekipa remontowa", line: "Na drabinie, obie ręce przy kablach." },
+  { src: images.physio, name: "Fizjoterapia", line: "Godzina zabiegu bez przerwy." },
+  { src: images.office, name: "Biuro", line: "Jedna rozmowa trwa, druga czeka." },
+  { src: images.vet, name: "Weterynarz", line: "Badanie w toku." },
+  { src: images.driver, name: "W trasie", line: "Ręce na kierownicy." },
+  { src: images.kitchen, name: "Restauracja", line: "Środek serwisu, talerze czekają." },
 ];
 
 const features = [
   { Icon: ChatCircleText, title: "Rozmawia po polsku", text: "Naturalnie i spokojnie, bez menu „wciśnij 1”. Rozumie też zdenerwowanego klienta.", span: "lg:col-span-2" },
-  { Icon: WarningCircle, title: "Odróżnia pilne od zwykłych", text: "Awarię oznacza jako pilną. Zwykłe pytanie o termin po prostu zapisuje.", span: "" },
+  { Icon: WarningCircle, title: "Odróżnia pilne od zwykłych", text: "Sprawę, która nie może czekać, oznacza jako pilną. Zwykłe pytanie o termin po prostu zapisuje.", span: "" },
   { Icon: UsersThree, title: "Kilka rozmów naraz", text: "Gdy kilka osób dzwoni w tej samej chwili, każda słyszy odpowiedź, a nie sygnał zajętości.", span: "" },
   { Icon: MapPinArea, title: "Zna Twoje ceny i rejon", text: "Mówi tylko to, co mu przekażesz: ceny, godziny pracy i obszar, na którym działasz.", span: "" },
   { Icon: ArrowsLeftRight, title: "Przełącza do Ciebie", text: "Gdy klient chce rozmawiać z człowiekiem, przełącza rozmowę na numer, który wskażesz.", span: "" },
@@ -151,7 +164,7 @@ export default function Home() {
                 className="text-balance text-[clamp(46px,7vw,84px)] font-semibold leading-[1.02] tracking-[-0.04em]"
               />
               <p className="mx-auto mt-6 max-w-[30ch] text-[clamp(20px,2.2vw,24px)] leading-[1.35] text-muted-dark lg:mx-0">
-                Klient dzwoni o 3 w nocy. Po minucie masz SMS z adresem i opisem sprawy.
+                Klient dzwoni, gdy masz zajęte ręce albo śpisz. Po minucie masz SMS z opisem sprawy.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-3.5 lg:justify-start">
                 <a href={`tel:${site.demoPhone}`} className={`${pill} bg-amber text-ink`}>Zadzwoń do demo</a>
@@ -166,16 +179,44 @@ export default function Home() {
 
         {/* ZDJĘCIE: rośnie na cały ekran przy przewijaniu */}
         <ScrollExpandMedia
-          mediaType="video"
-          mediaSrc={images.plumberVideo}
-          posterSrc={images.plumberPoster}
-          bgImageSrc={images.nightBlocks}
-          alt="Fachowiec przy pracy, obok na podłodze leży telefon"
+          mediaType="image"
+          mediaSrc={images.hairdresser}
+          bgImageSrc={images.city}
+          alt="Fryzjerka strzyże klientkę, a obok na blacie dzwoni telefon"
           title="Ty pracujesz. My odbieramy."
           date="Telefon dzwoni, a Ty masz pełne ręce roboty."
           scrollToExpand="Przewiń w dół"
           textBlend
         />
+
+        {/* DLA KOGO: przesuwająca się galeria branż */}
+        <section aria-labelledby="dla-kazdego" className="overflow-hidden bg-[#09090b] py-28 text-parchment">
+          <div className={wrap}>
+            <h2 id="dla-kazdego" className={`${h2} mx-auto max-w-[20ch] text-center`}>
+              Dla każdego, kto ma pełne ręce roboty.
+            </h2>
+            <p className="mx-auto mt-3.5 max-w-[40ch] text-center text-[21px] text-muted-dark">
+              Salon, warsztat, gabinet, biuro albo firma w trasie. Telefon zawsze dzwoni w najgorszym momencie.
+            </p>
+          </div>
+          <div className="marquee group mt-14">
+            {[0, 1].map((copy) => (
+              <ul key={copy} aria-hidden={copy === 1} className="marquee-track flex shrink-0 gap-4 pr-4">
+                {trades.map(({ src, name, line }) => (
+                  <li key={name} className="relative aspect-[3/2] w-[min(78vw,440px)] shrink-0 overflow-hidden rounded-[22px] bg-[#1d1d1f]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={src} alt={copy === 0 ? `${name}: ${line}` : ""} loading="lazy" className="h-full w-full object-cover" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 to-transparent" />
+                    <div className="absolute inset-x-5 bottom-4">
+                      <p className="text-[19px] font-semibold">{name}</p>
+                      <p className="text-[15px] text-[#d2d2d7]">{line}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </section>
 
         {/* NIEODEBRANE: statystyka + lista jak w telefonie */}
         <section className="bg-parchment py-28">
@@ -188,7 +229,7 @@ export default function Home() {
                 className={`${h2} mt-5 max-w-[18ch] text-[clamp(28px,3.2vw,40px)]`}
               />
               <p className="mt-4 max-w-[40ch] text-[19px] text-muted">
-                Klient z pilną sprawą nie zostawia wiadomości. Dzwoni do następnej firmy z listy.
+                Klient, który się nie dodzwoni, rzadko zostawia wiadomość. Dzwoni do następnej firmy z listy.
               </p>
               <p className="mt-6 text-xs text-[#86868b]">Źródło: raport Fachowcy.pl Ventures (2016), badanie 400 polskich firm.</p>
             </div>
@@ -238,8 +279,8 @@ export default function Home() {
         {/* PORÓWNANIE */}
         <section className="bg-parchment py-28">
           <div className={wrap}>
-            <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Ta sama noc. Dwa zakończenia.</h2>
-            <p className="mx-auto mb-14 mt-3.5 max-w-[34ch] text-center text-[21px] text-muted">Klient dzwoni o 3:14 z pilną sprawą.</p>
+            <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Ten sam telefon. Dwa zakończenia.</h2>
+            <p className="mx-auto mb-14 mt-3.5 max-w-[34ch] text-center text-[21px] text-muted">Klient dzwoni o 14:05, a Ty jesteś w trakcie pracy.</p>
             <div className="grid gap-5 md:grid-cols-2">
               <div className="flex flex-col gap-6 rounded-[22px] bg-white px-8 py-9">
                 <h3 className="text-2xl font-semibold tracking-[-0.02em] text-muted">Bez NOKTURNA</h3>
@@ -251,7 +292,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ol>
-                <p className="mt-auto border-t border-hairline pt-5 font-semibold">Zlecenie u konkurencji.</p>
+                <p className="mt-auto border-t border-hairline pt-5 font-semibold">Klient u konkurencji.</p>
               </div>
               <div className="relative flex flex-col gap-6 overflow-hidden rounded-[22px] bg-[#09090b] px-8 py-9 text-parchment">
                 <AmberGlow className="opacity-40" />
@@ -264,7 +305,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ol>
-                <p className="relative mt-auto border-t border-[#3a3a3c] pt-5 font-semibold">Zlecenie Twoje.</p>
+                <p className="relative mt-auto border-t border-[#3a3a3c] pt-5 font-semibold">Klient Twój.</p>
               </div>
             </div>
           </div>
@@ -328,7 +369,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FINAŁ: znowu noc nad osiedlem */}
+        {/* FINAŁ: znowu noc nad miastem */}
         <section id="kontakt" className="relative overflow-hidden bg-[#09090b] pb-48 pt-32 text-center text-parchment">
           <AmberGlow />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%]">
@@ -337,7 +378,7 @@ export default function Home() {
           <div className={`${wrap} relative`}>
             <TextReveal
               as="h2"
-              text="Następny nocny telefon odbierzemy za Ciebie."
+              text="Następny telefon, którego nie odbierzesz, odbierzemy za Ciebie."
               className={`${h2} mx-auto max-w-[16ch] text-[clamp(36px,5.4vw,64px)] leading-[1.05]`}
             />
             <p className="mx-auto mt-[18px] max-w-[36ch] text-[21px] text-muted-dark">15 minut rozmowy. Pokażemy to na Twoim przykładzie.</p>
