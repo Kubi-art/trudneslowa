@@ -326,7 +326,8 @@ export default function Home() {
       <footer className="nk-wrap nk-footer">
         <Logo />
         <span>Telefon i czat. Po Twojej stronie.</span>
-        <span>© 2026 NOKTURN · Demo koncepcji</span>
+        <nav aria-label="Informacje prawne" className="nk-legal-links"><Link href="/regulamin">Regulamin</Link><Link href="/polityka-prywatnosci">Polityka prywatności</Link></nav>
+        <span>© 2026 NOKTURN</span>
       </footer>
     </div>
   );

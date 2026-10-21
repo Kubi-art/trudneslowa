@@ -17,6 +17,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
         </div>
         <h1 className="mt-6 text-balance text-[clamp(32px,5vw,44px)] font-semibold leading-[1.1] tracking-[-0.03em]">{title}</h1>
         <p className="mt-3 text-[15px] text-muted">Ostatnia aktualizacja: {site.legalUpdated}</p>
+        <p role="note" className="mt-6 rounded-xl border border-amber-deep p-4 text-sm text-ink">Projekt przed publikacją — dane operatora i konfiguracja dostawców wymagają uzupełnienia. Dokument nie jest jeszcze wersją obowiązującą.</p>
         <div className="legal mt-10 flex flex-col gap-10">{children}</div>
       </article>
     </main>
