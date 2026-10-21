@@ -1,410 +1,419 @@
 import Link from "next/link";
-import { Logo, LogoMark } from "@/components/logo";
-import {
-  ArrowsLeftRight,
-  ChatCircleText,
-  EnvelopeSimple,
-  MapPinArea,
-  PhoneX,
-  UsersThree,
-  WarningCircle,
-} from "@phosphor-icons/react/ssr";
-import { site } from "@/lib/site";
-import { PhoneCall } from "@/components/phone-call";
-import { Calculator } from "@/components/calculator";
-import { NightCity } from "@/components/night-city";
-import { AmberGlow } from "@/components/ui/amber-glow";
-import { TextReveal } from "@/components/ui/text-reveal";
-import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
-import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
-import { images } from "@/lib/images";
-import { MobileCta } from "@/components/mobile-cta";
-
-function StepImage({ src, alt, children }: { src: string; alt: string; children?: React.ReactNode }) {
-  return (
-    <div className="relative h-full w-full">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className="h-full w-full object-cover" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
-      {children && <div className="absolute inset-x-5 bottom-5">{children}</div>}
-    </div>
-  );
-}
-
-const steps = [
-  {
-    title: "1. Rozmawiamy 15 minut",
-    description: "Mówisz, czym zajmuje się Twoja firma, gdzie działasz, jakie masz ceny i o co pytać klienta. Resztę ustawiamy my.",
-    content: (
-      <StepImage src={images.office} alt="Właścicielka firmy rozmawia przez telefon przy biurku i robi notatki">
-        <div className="flex flex-col gap-2 text-[14px] leading-snug">
-          <p className="max-w-[80%] self-start rounded-2xl bg-[#2c2c2e] px-3.5 py-2.5 text-parchment">Co oferujesz i w jakich godzinach pracujesz?</p>
-          <p className="max-w-[80%] self-end rounded-2xl bg-amber px-3.5 py-2.5 text-ink">Pon.–pt. 8–18, sobota do 14. Cennik wyślę mailem.</p>
-        </div>
-      </StepImage>
-    ),
-  },
-  {
-    title: "2. Włączasz przekierowanie",
-    description: "Numer zostaje Twój. Wpisujesz jeden kod w telefonie: gdy nie odbierasz, masz zajęte albo jesteś poza zasięgiem, rozmowę przejmuje NOKTURN.",
-    content: (
-      <StepImage src={images.dialing} alt="Dłonie wpisujące kod na klawiaturze telefonu">
-        <code className="block rounded-2xl bg-[#0b0b0d]/90 px-4 py-3 text-center font-mono text-[17px] tracking-wide text-parchment">
-          **004*<span className="text-amber">numer NOKTURNA</span>#
-        </code>
-      </StepImage>
-    ),
-  },
-  {
-    title: "3. Dostajesz SMS-y",
-    description: "Po każdej rozmowie dostajesz SMS: kto dzwonił, w jakiej sprawie i czy to pilne. Oddzwaniasz, kiedy możesz.",
-    content: (
-      <StepImage src={images.bedside} alt="Telefon na szafce nocnej wyświetla powiadomienie">
-        <div className="rounded-2xl bg-[#f2f2f4] px-3.5 py-3 text-[14px] leading-snug text-ink shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-          <strong className="font-semibold">Nowy klient:</strong> pyta o wolny termin w piątek. Oddzwoń: 512&nbsp;•••&nbsp;•••
-        </div>
-      </StepImage>
-    ),
-  },
-];
-
-const pill =
-  "inline-flex min-h-12 items-center rounded-full px-[26px] font-semibold transition-transform duration-200 ease-apple active:scale-95";
-const h2 =
-  "text-balance text-[clamp(32px,4.4vw,56px)] font-semibold leading-[1.07] tracking-[-0.03em]";
-const wrap = "mx-auto max-w-[1080px] px-5";
-
-const missedCalls = [
-  ["Nieznany", "komórka", "3:14"],
-  ["Nieznany", "komórka", "3:16"],
-  ["+48 512 ••• •••", "komórka", "6:52"],
-  ["Nieznany", "komórka", "7:05"],
-];
-
-const withoutUs = [
-  ["14:05", "Telefon dzwoni w kieszeni. Masz zajęte ręce."],
-  ["14:06", "Klient nie zostawia wiadomości."],
-  ["14:07", "Dzwoni do następnej firmy z Google. Ta odbiera."],
-  ["17:30", "Widzisz nieodebrane połączenie. Oddzwaniasz, ale klient już się umówił gdzie indziej."],
-];
-const withUs = [
-  ["14:05", "Nie odbierasz. Po kilku sygnałach rozmowę przejmuje NOKTURN."],
-  ["14:06", "Klient mówi, czego potrzebuje, i zostawia numer."],
-  ["14:06", "Dostajesz SMS z opisem sprawy."],
-  ["14:30", "Kończysz pracę, oddzwaniasz i umawiasz klienta."],
-];
-
-const trades = [
-  { src: images.hairdresser, name: "Salon fryzjerski", line: "Nożyczki w dłoniach, klientka na fotelu." },
-  { src: images.mechanic, name: "Warsztat", line: "Ręce w silniku, telefon na skrzynce." },
-  { src: images.dentist, name: "Gabinet", line: "Pacjent na fotelu. Nie odejdziesz." },
-  { src: images.bakery, name: "Piekarnia", line: "4:30 rano, ręce w cieście." },
-  { src: images.electrician, name: "Ekipa remontowa", line: "Na drabinie, obie ręce przy kablach." },
-  { src: images.physio, name: "Fizjoterapia", line: "Godzina zabiegu bez przerwy." },
-  { src: images.office, name: "Biuro", line: "Jedna rozmowa trwa, druga czeka." },
-  { src: images.vet, name: "Weterynarz", line: "Badanie w toku." },
-  { src: images.driver, name: "W trasie", line: "Ręce na kierownicy." },
-  { src: images.kitchen, name: "Restauracja", line: "Środek serwisu, talerze czekają." },
-];
+import { Logo } from "@/components/logo";
+import { ProductDemo, Reveal, SignalArt } from "@/components/product-demo";
+import "./redesign.css";
 
 const features = [
-  { Icon: ChatCircleText, title: "Rozmawia po polsku", text: "Naturalnie i spokojnie, bez menu „wciśnij 1”. Rozumie też zdenerwowanego klienta.", span: "lg:col-span-2" },
-  { Icon: WarningCircle, title: "Odróżnia pilne od zwykłych", text: "Sprawę, która nie może czekać, oznacza jako pilną. Zwykłe pytanie o termin po prostu zapisuje.", span: "" },
-  { Icon: UsersThree, title: "Kilka rozmów naraz", text: "Gdy kilka osób dzwoni w tej samej chwili, każda słyszy odpowiedź, a nie sygnał zajętości.", span: "" },
-  { Icon: MapPinArea, title: "Zna Twoje ceny i rejon", text: "Mówi tylko to, co mu przekażesz: ceny, godziny pracy i obszar, na którym działasz.", span: "" },
-  { Icon: ArrowsLeftRight, title: "Przełącza do Ciebie", text: "Gdy klient chce rozmawiać z człowiekiem, przełącza rozmowę na numer, który wskażesz.", span: "" },
-  { Icon: EnvelopeSimple, title: "Zapis każdej rozmowy", text: "Poza SMS-em dostajesz mailem pełny zapis, więc wiesz dokładnie, co klient powiedział.", span: "lg:col-span-2" },
-];
-
-const faq = [
-  ["Czy klient wie, że rozmawia z AI?", "Tak. Asystent mówi o tym na początku i informuje o nagrywaniu, bo tego wymaga prawo."],
-  ["Czy muszę zmieniać numer?", "Nie. Ustawiasz tylko przekierowanie: gdy nie odbierzesz, rozmowa trafia do NOKTURNA. Gdy odbierzesz sam, wszystko działa jak dotąd."],
-  ["Co, jeśli czegoś nie zrozumie?", "Zapisze numer i to, co usłyszał, a w SMS-ie dopisze, żeby oddzwonić."],
-  ["Czy mogę zrezygnować?", "Tak, z miesięcznym wypowiedzeniem. Potem wyłączasz przekierowanie kodem ##004# i telefon działa jak wcześniej."],
-];
+  [
+    "01",
+    "Telefon, który ktoś odbiera.",
+    "Asystentka telefoniczna",
+    "Gdy pracujesz, rozmawiasz lub odpoczywasz, AI przyjmuje połączenie. Pyta o szczegóły i przygotowuje podsumowanie.",
+    [
+      "Odpowiedzi na pytania klientów",
+      "Zebranie danych i powodu kontaktu",
+      "Podsumowanie rozmowy dla Ciebie",
+    ],
+  ],
+  [
+    "02",
+    "Strona, która odpowiada.",
+    "Chatbot na Twoją stronę",
+    "Klient nie musi szukać informacji po całej witrynie. Pyta na czacie, poznaje ofertę i zostawia zapytanie.",
+    [
+      "Pomoc w poznaniu Twojej oferty",
+      "Odpowiedzi na podstawie wiedzy firmy",
+      "Przekazanie zapytania do zespołu",
+    ],
+  ],
+] as const;
 
 export default function Home() {
   return (
-    <>
-      <div className="grain" aria-hidden="true" />
-      <MobileCta />
-
-      <header className="sticky top-0 z-40 bg-black/75 backdrop-blur-xl backdrop-saturate-150">
-        <nav aria-label="Główna" className="mx-auto flex h-12 max-w-[1080px] items-center justify-between gap-4 px-5">
-          <Link href="/" aria-label="NOKTURN, strona główna" className="text-[15px] text-parchment">
+    <div className="nk">
+      <header className="nk-header">
+        <nav className="nk-wrap nk-nav" aria-label="Główna">
+          <Link href="/" aria-label="NOKTURN — strona główna">
             <Logo />
           </Link>
-          <div className="flex items-center gap-5 text-[13px]">
-            <a href="#jak" className="hidden text-[#d2d2d7] hover:text-white sm:inline">Jak działa</a>
-            <a href="#kalkulator" className="hidden text-[#d2d2d7] hover:text-white sm:inline">Kalkulator</a>
-            <a href="#cennik" className="hidden text-[#d2d2d7] hover:text-white sm:inline">Cennik</a>
-            <a href={site.calendlyUrl} className="inline-flex min-h-[30px] items-center rounded-full bg-amber px-3.5 font-semibold text-ink transition-transform active:scale-95">
-              Umów rozmowę
-            </a>
+          <div className="nk-nav-links">
+            <a href="#rozwiazania">Rozwiązania</a>
+            <a href="#demo">Demo</a>
+            <a href="#wdrozenie">Jak zaczynamy</a>
           </div>
+          <a className="nk-button nk-button-small" href="#demo">
+            Zobacz demo <span aria-hidden="true">↗</span>
+          </a>
         </nav>
       </header>
-
       <main id="tresc">
-        {/* HERO: noc nad osiedlem, jedno światło, telefon */}
-        <section id="top" className="relative overflow-hidden bg-[#09090b] text-parchment">
-          <AmberGlow />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] opacity-90">
-            <NightCity density={0.045} />
-          </div>
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#09090b] to-transparent" />
-
-          <div className={`${wrap} relative grid items-center gap-14 pb-24 pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:pb-32 lg:pt-28`}>
-            <div className="text-center lg:text-left">
-              <p className="mb-3 text-[19px] font-semibold text-amber">Wirtualny asystent telefoniczny. Całą dobę.</p>
-              <TextReveal
-                as="h1"
-                startOnView={false}
-                text="Odbiera, kiedy Ty nie możesz."
-                className="text-balance text-[clamp(46px,7vw,84px)] font-semibold leading-[1.02] tracking-[-0.04em]"
-              />
-              <p className="mx-auto mt-6 max-w-[30ch] text-[clamp(20px,2.2vw,24px)] leading-[1.35] text-muted-dark lg:mx-0">
-                Klient dzwoni, gdy masz zajęte ręce albo śpisz. Po minucie masz SMS z opisem sprawy.
-              </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-3.5 lg:justify-start">
-                <a href={`tel:${site.demoPhone}`} className={`${pill} bg-amber text-ink`}>Zadzwoń do demo</a>
-                <a href="#jak" className="text-[19px] text-amber hover:underline">Zobacz, jak to działa ›</a>
-              </div>
+        <section className="nk-hero nk-wrap">
+          <div className="nk-hero-copy">
+            <p className="nk-eyebrow">
+              <span className="nk-status" /> TWÓJ KONTAKT Z KLIENTEM. TAKŻE PO
+              GODZINACH.
+            </p>
+            <h1>
+              Twoja firma
+              <br />
+              zawsze ma
+              <br />
+              <em>co odpowiedzieć.</em>
+            </h1>
+            <p className="nk-lead">
+              Asystentka telefoniczna i chatbot AI.
+              <br className="nk-desktop" /> Odbierają pytania. Zbierają
+              zgłoszenia.
+              <br className="nk-desktop" /> Dają Ci przestrzeń na Twoją pracę.
+            </p>
+            <div className="nk-actions">
+              <a className="nk-button" href="#demo">
+                Sprawdź, jak to działa <span aria-hidden="true">↗</span>
+              </a>
+              <a className="nk-text-link" href="#rozwiazania">
+                Poznaj rozwiązania <span aria-hidden="true">↓</span>
+              </a>
             </div>
-            <div className="relative">
-              <PhoneCall />
-            </div>
-          </div>
-        </section>
-
-        {/* ZDJĘCIE: rośnie na cały ekran przy przewijaniu */}
-        <ScrollExpandMedia
-          mediaType="image"
-          mediaSrc={images.hairdresser}
-          bgImageSrc={images.city}
-          alt="Fryzjerka strzyże klientkę, a obok na blacie dzwoni telefon"
-          title="Ty pracujesz. My odbieramy."
-          date="Telefon dzwoni, a Ty masz pełne ręce roboty."
-          scrollToExpand="Przewiń w dół"
-          textBlend
-        />
-
-        {/* DLA KOGO: przesuwająca się galeria branż */}
-        <section aria-labelledby="dla-kazdego" className="overflow-hidden bg-[#09090b] py-28 text-parchment">
-          <div className={wrap}>
-            <h2 id="dla-kazdego" className={`${h2} mx-auto max-w-[20ch] text-center`}>
-              Dla każdego, kto ma pełne ręce roboty.
-            </h2>
-            <p className="mx-auto mt-3.5 max-w-[40ch] text-center text-[21px] text-muted-dark">
-              Salon, warsztat, gabinet, biuro albo firma w trasie. Telefon zawsze dzwoni w najgorszym momencie.
+            <p className="nk-fine">
+              Po polsku. W Twoim stylu. Z wiedzą o Twojej firmie.
             </p>
           </div>
-          <div className="marquee group mt-14">
-            {[0, 1].map((copy) => (
-              <ul key={copy} aria-hidden={copy === 1} className="marquee-track flex shrink-0 gap-4 pr-4">
-                {trades.map(({ src, name, line }) => (
-                  <li key={name} className="relative aspect-[3/2] w-[min(78vw,440px)] shrink-0 overflow-hidden rounded-[22px] bg-[#1d1d1f]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={src} alt={copy === 0 ? `${name}: ${line}` : ""} loading="lazy" className="h-full w-full object-cover" />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 to-transparent" />
-                    <div className="absolute inset-x-5 bottom-4">
-                      <p className="text-[19px] font-semibold">{name}</p>
-                      <p className="text-[15px] text-[#d2d2d7]">{line}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+          <div
+            className="nk-hero-art"
+            aria-label="Przykład: telefon i czat przekazują zapytania do firmy"
+          >
+            <div className="nk-art-grid" />
+            <div className="nk-orbit nk-orbit-one" />
+            <div className="nk-orbit nk-orbit-two" />
+            <div className="nk-core">
+              <span className="nk-core-mark">
+                <i />
+                <i />
+                <i />
+                <i />
+              </span>
+            </div>
+            <div className="nk-float nk-voice">
+              <div className="nk-card-top">
+                <span className="nk-icon">↗</span>
+                <span>
+                  Asystentka telefoniczna<small>Przykładowe połączenie</small>
+                </span>
+                <span className="nk-status" />
+              </div>
+              <SignalArt />
+              <p>„Dzień dobry, w czym mogę pomóc?”</p>
+            </div>
+            <div className="nk-float nk-chat">
+              <div className="nk-card-top">
+                <span className="nk-icon">⌁</span>
+                <span>
+                  Chatbot na stronie
+                  <small>Pomoc w zasięgu jednej wiadomości</small>
+                </span>
+              </div>
+              <p className="nk-bubble">Czy mogę zapytać o ofertę?</p>
+              <p className="nk-bubble nk-answer">
+                Jasne. Powiedz, czego potrzebujesz.
+              </p>
+            </div>
+            <div className="nk-float nk-notification">
+              <span className="nk-check">✓</span>
+              <div>
+                Wszystko, co warto wiedzieć.
+                <small>Nowe zapytanie. Szczegóły w jednym miejscu.</small>
+              </div>
+            </div>
+            <span className="nk-art-caption">
+              DWA KANAŁY. JEDEN SPOKOJNIEJSZY DZIEŃ.
+            </span>
+          </div>
+        </section>
+        <div className="nk-strip">
+          <div className="nk-wrap">
+            <span>Dobry kontakt nie kończy się o 17:00.</span>
+            <span>
+              Telefon <b>↗</b>
+            </span>
+            <span>
+              Czat <b>↗</b>
+            </span>
+            <span>
+              Twoja firma <b>✓</b>
+            </span>
+          </div>
+        </div>
+        <section className="nk-section nk-wrap" id="rozwiazania">
+          <Reveal>
+            <div className="nk-section-heading">
+              <div>
+                <p className="nk-eyebrow">01 / ROZWIĄZANIA</p>
+                <h2>
+                  Klient wybiera kanał.
+                  <br />
+                  <span>Ty zachowujesz kontakt.</span>
+                </h2>
+              </div>
+              <p>
+                Przez telefon lub na stronie. Wybierz jedno rozwiązanie albo
+                połącz oba — zależnie od tego, jak kontaktują się z Tobą
+                klienci.
+              </p>
+            </div>
+          </Reveal>
+          <div className="nk-products">
+            {features.map(([n, title, label, description, list], i) => (
+              <Reveal key={n}>
+                <article className="nk-product">
+                  <div className="nk-product-label">
+                    <span>{label}</span>
+                    <span>{n}</span>
+                  </div>
+                  <div
+                    className={`nk-product-visual ${i === 1 ? "nk-visual-chat" : ""}`}
+                    aria-hidden="true"
+                  >
+                    {i === 0 ? (
+                      <>
+                        <div className="nk-call-disc">↗</div>
+                        <div className="nk-visual-line">
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                          <i />
+                        </div>
+                        <span>Rozmowa → szczegóły → podsumowanie</span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="nk-mini-browser">
+                          <div className="nk-browser-bar">
+                            <i />
+                            <i />
+                            <i />
+                            <span>Twoja strona</span>
+                          </div>
+                          <div className="nk-browser-content">
+                            <div className="nk-skeleton">
+                              <b />
+                              <i />
+                              <i />
+                            </div>
+                            <div className="nk-mini-chat">
+                              <span>W czym możemy pomóc?</span>
+                              <i>Poznaj ofertę ↗</i>
+                              <i>Zostaw zapytanie ↗</i>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                  <ul>
+                    {list.map((item) => (
+                      <li key={item}>
+                        <span aria-hidden="true">✓</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href={i === 0 ? "#demo-telefon" : "#demo-czat"}
+                    className="nk-text-link"
+                  >
+                    Zobacz przykład {i === 0 ? "rozmowy" : "czatu"}{" "}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </article>
+              </Reveal>
             ))}
           </div>
         </section>
-
-        {/* NIEODEBRANE: statystyka + lista jak w telefonie */}
-        <section className="bg-parchment py-28">
-          <div className={`${wrap} grid items-center gap-14 md:grid-cols-2`}>
-            <div>
-              <p className="text-[clamp(96px,14vw,184px)] font-semibold leading-[0.9] tracking-[-0.05em]">34%</p>
-              <TextReveal
-                as="h2"
-                text="badanych firm nie odebrało telefonu od klienta."
-                className={`${h2} mt-5 max-w-[18ch] text-[clamp(28px,3.2vw,40px)]`}
-              />
-              <p className="mt-4 max-w-[40ch] text-[19px] text-muted">
-                Klient, który się nie dodzwoni, rzadko zostawia wiadomość. Dzwoni do następnej firmy z listy.
+        <section className="nk-demo-section" id="demo">
+          <div className="nk-wrap">
+            <Reveal>
+              <div className="nk-section-heading">
+                <div>
+                  <p className="nk-eyebrow">02 / ZOBACZ W PRAKTYCE</p>
+                  <h2>
+                    Mniej opowiadania.
+                    <br />
+                    <span>Więcej pokazania.</span>
+                  </h2>
+                </div>
+                <p>
+                  Wybierz branżę i kanał. Zobacz, jak pytanie klienta zamienia
+                  się w czytelne zgłoszenie dla Twojej firmy.
+                </p>
+              </div>
+            </Reveal>
+            <ProductDemo />
+          </div>
+        </section>
+        <section className="nk-section nk-wrap" id="wdrozenie">
+          <Reveal>
+            <div className="nk-section-heading">
+              <div>
+                <p className="nk-eyebrow">03 / PROSTY POCZĄTEK</p>
+                <h2>
+                  Twoja wiedza.
+                  <br />
+                  <span>Nasz sposób na jej użycie.</span>
+                </h2>
+              </div>
+              <p>
+                Nie musisz znać się na AI. Wspólnie ustalamy, w czym asystent ma
+                pomagać i kiedy przekazać sprawę człowiekowi.
               </p>
-              <p className="mt-6 text-xs text-[#86868b]">Źródło: raport Fachowcy.pl Ventures (2016), badanie 400 polskich firm.</p>
             </div>
-
-            <div className="mx-auto w-full max-w-[420px] rounded-[28px] bg-white p-2 shadow-[0_30px_60px_-30px_rgba(29,29,31,0.35)]">
-              <div className="rounded-[22px] bg-white px-5 pb-4 pt-5">
-                <div className="flex items-baseline justify-between">
-                  <p className="text-[28px] font-semibold tracking-[-0.03em]">Ostatnie</p>
-                  <p className="text-[15px] font-semibold text-[#ff3b30]">Nieodebrane</p>
-                </div>
-                <ul className="mt-3 divide-y divide-hairline">
-                  {missedCalls.map(([who, kind, time]) => (
-                    <li key={time} className="flex items-center gap-3 py-3">
-                      <PhoneX size={20} weight="fill" className="shrink-0 text-[#ff3b30]" aria-hidden="true" />
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate font-semibold text-[#ff3b30]">{who}</p>
-                        <p className="text-[13px] text-muted">{kind}</p>
-                      </div>
-                      <span className="tabular-nums text-[15px] text-muted">{time}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-2 text-center text-[13px] text-muted">Tak wygląda rano telefon zapracowanego właściciela firmy. Każda pozycja to klient, który potem zadzwonił gdzie indziej.</p>
-              </div>
-            </div>
+          </Reveal>
+          <div className="nk-steps">
+            {[
+              [
+                "01",
+                "Poznajemy Twoją firmę",
+                "Oferta, godziny pracy, najczęstsze pytania. Ustalamy, co AI może powiedzieć, a czego nie powinno obiecywać.",
+              ],
+              [
+                "02",
+                "Układamy i testujemy rozmowy",
+                "Dopasowujemy język i scenariusze. Sprawdzasz przykłady, zanim rozwiązanie trafi do Twoich klientów.",
+              ],
+              [
+                "03",
+                "Łączymy i dopracowujemy",
+                "Telefon przez przekierowanie, chatbot na stronie. Ustalamy sposób przekazywania zgłoszeń i poprawiamy szczegóły.",
+              ],
+            ].map(([n, t, d]) => (
+              <Reveal key={n}>
+                <article>
+                  <span className="nk-step-number">{n}</span>
+                  <h3>{t}</h3>
+                  <p>{d}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </section>
-
-        {/* KALKULATOR */}
-        <section id="kalkulator" className="dot-grid scroll-mt-12 bg-white py-28">
-          <div className={wrap}>
-            <h2 className={`${h2} mx-auto max-w-[20ch] text-center`}>Policz, ile tracisz.</h2>
-            <p className="mx-auto mb-14 mt-3.5 max-w-[36ch] text-center text-[21px] text-muted">Przesuń suwaki, żeby zobaczyć swoje liczby.</p>
-            <Calculator />
-          </div>
-        </section>
-
-        {/* JAK DZIAŁA: kroki z przypiętym zdjęciem */}
-        <section id="jak" className="scroll-mt-12 bg-graphite text-parchment">
-          <div className="mx-auto max-w-[1080px] px-5 pt-28">
-            <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Działa w tydzień. Ty wpisujesz tylko jeden kod.</h2>
-          </div>
-          <StickyScroll content={steps} />
-          <div className="h-20" />
-        </section>
-
-        {/* PORÓWNANIE */}
-        <section className="bg-parchment py-28">
-          <div className={wrap}>
-            <h2 className={`${h2} mx-auto max-w-[18ch] text-center`}>Ten sam telefon. Dwa zakończenia.</h2>
-            <p className="mx-auto mb-14 mt-3.5 max-w-[34ch] text-center text-[21px] text-muted">Klient dzwoni o 14:05, a Ty jesteś w trakcie pracy.</p>
-            <div className="grid gap-5 md:grid-cols-2">
-              <div className="flex flex-col gap-6 rounded-[22px] bg-white px-8 py-9">
-                <h3 className="text-2xl font-semibold tracking-[-0.02em] text-muted">Bez NOKTURNA</h3>
-                <ol className="flex flex-col gap-[18px]">
-                  {withoutUs.map(([t, s]) => (
-                    <li key={t + s} className="grid grid-cols-[56px_1fr] gap-3">
-                      <span className="font-semibold tabular-nums text-[#86868b]">{t}</span>
-                      <span>{s}</span>
-                    </li>
-                  ))}
-                </ol>
-                <p className="mt-auto border-t border-hairline pt-5 font-semibold">Klient u konkurencji.</p>
-              </div>
-              <div className="relative flex flex-col gap-6 overflow-hidden rounded-[22px] bg-[#09090b] px-8 py-9 text-parchment">
-                <AmberGlow className="opacity-40" />
-                <h3 className="relative text-2xl font-semibold tracking-[-0.02em] text-amber">Z NOKTURNEM</h3>
-                <ol className="relative flex flex-col gap-[18px]">
-                  {withUs.map(([t, s]) => (
-                    <li key={t + s} className="grid grid-cols-[56px_1fr] gap-3">
-                      <span className="font-semibold tabular-nums text-amber">{t}</span>
-                      <span>{s}</span>
-                    </li>
-                  ))}
-                </ol>
-                <p className="relative mt-auto border-t border-[#3a3a3c] pt-5 font-semibold">Klient Twój.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FUNKCJE */}
-        <section className="relative overflow-hidden bg-black py-28 text-parchment">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(245,165,36,0.16),transparent_70%)]" aria-hidden="true" />
-          <div className={`${wrap} relative`}>
-            <h2 className={`${h2} mx-auto mb-16 max-w-[20ch] text-center`}>Co robi przy telefonie.</h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {features.map(({ Icon, title, text, span }) => (
-                <div key={title} className={`flex flex-col gap-3 rounded-[22px] border border-white/10 bg-white/[0.03] p-7 ${span}`}>
-                  <Icon size={34} weight="light" className="text-amber" aria-hidden="true" />
-                  <h3 className="text-[21px] font-semibold">{title}</h3>
-                  <p className="text-muted-dark">{text}</p>
+        <section className="nk-control-section">
+          <div className="nk-wrap nk-control">
+            <Reveal>
+              <p className="nk-eyebrow">AUTOMATYZACJA Z WYRAŹNYMI GRANICAMI</p>
+              <h2>
+                Twoja firma.
+                <br />
+                Twoje zasady.
+                <br />
+                <span>Twój spokojniejszy dzień.</span>
+              </h2>
+              <p>
+                Dobry asystent wie także, kiedy poprosić o pomoc. Projektujemy
+                rozmowy tak, aby człowiek pozostał częścią obsługi.
+              </p>
+            </Reveal>
+            <div className="nk-control-list">
+              {[
+                [
+                  "Wiedza, którą zatwierdzasz",
+                  "Odpowiedzi opieramy na materiałach Twojej firmy. Zakres informacji ustalamy podczas wdrożenia.",
+                ],
+                [
+                  "Jasne przekazanie do człowieka",
+                  "Gdy sprawa wykracza poza scenariusz, asystent zbiera szczegóły do dalszego kontaktu.",
+                ],
+                [
+                  "Kontakt w stylu Twojej marki",
+                  "Spokojny, konkretny lub bardziej swobodny. Sposób rozmowy dopasowujemy do Twoich klientów.",
+                ],
+              ].map(([t, d]) => (
+                <div key={t}>
+                  <span className="nk-check">✓</span>
+                  <div>
+                    <h3>{t}</h3>
+                    <p>{d}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
-
-        {/* CENNIK */}
-        <section id="cennik" className="scroll-mt-12 bg-white py-28 text-center">
-          <div className={wrap}>
-            <h2 className={`${h2} mx-auto max-w-[18ch]`}>Jedna cena. Wszystko po naszej stronie.</h2>
-            <div className="mx-auto mt-12 max-w-[760px] rounded-[30px] bg-parchment px-6 py-12 sm:px-12">
-              <p className="text-[21px] font-semibold">NOKTURN 24/7</p>
-              <p className="mt-1.5 text-[clamp(56px,7vw,80px)] font-semibold leading-[1.05] tracking-[-0.04em]">{site.priceMonthly} zł</p>
-              <p className="mt-1.5 text-muted">miesięcznie netto. Wdrożenie {site.priceSetup} zł.</p>
-              <ul className="mt-10 grid gap-6 text-left sm:grid-cols-2">
-                {[
-                  ["Całą dobę", "także w weekendy i święta"],
-                  ["SMS po każdej rozmowie", "w kilka sekund od rozłączenia"],
-                  ["Pod Twoją branżę", "zmiany i poprawki bez dopłat"],
-                  ["Bez umowy na lata", "miesiąc wypowiedzenia"],
-                ].map(([a, b]) => (
-                  <li key={a} className="flex flex-col gap-1 border-t border-hairline pt-4">
-                    <strong className="font-semibold">{a}</strong>
-                    <span className="text-muted">{b}</span>
-                  </li>
-                ))}
-              </ul>
-              <a href={site.calendlyUrl} className={`${pill} mt-11 bg-ink text-parchment`}>Umów rozmowę</a>
-            </div>
+        <section className="nk-section nk-wrap nk-faq">
+          <div>
+            <p className="nk-eyebrow">WARTO WIEDZIEĆ</p>
+            <h2>
+              Kilka prostych
+              <br />
+              <span>odpowiedzi.</span>
+            </h2>
+          </div>
+          <div>
+            {[
+              [
+                "Czy to rozwiązanie dla mojej branży?",
+                "Zaczynamy od sposobu kontaktu z klientami, a nie od etykiety branży. Najlepiej sprawdzają się powtarzalne pytania, wyjaśnianie oferty i przyjmowanie zapytań. Zakres dopasowujemy do firmy.",
+              ],
+              [
+                "Czy mogę wybrać tylko chatbota lub tylko telefon?",
+                "Tak. Są to dwa osobne rozwiązania. Możesz zacząć od jednego kanału, a drugi dodać później.",
+              ],
+              [
+                "Czy muszę zmieniać numer telefonu?",
+                "Zakładamy wykorzystanie przekierowania z Twojego numeru. Szczegóły techniczne sprawdzamy z uwzględnieniem operatora i obecnej telefonii.",
+              ],
+              [
+                "Czy pokazane demo jest prawdziwą rozmową z AI?",
+                "Nie. To interaktywna symulacja przygotowanych scenariuszy. Pokazuje projekt obsługi i przykładowe podsumowania. Nie wykonuje połączeń ani nie wysyła danych.",
+              ],
+              [
+                "Co jest potrzebne do ustalenia ceny?",
+                "Zakres odpowiedzi, wybrane kanały, przewidywana liczba rozmów i potrzebne integracje. Ten projekt prezentuje rozwiązanie; nie zawiera jeszcze oferty cenowej.",
+              ],
+            ].map(([q, a]) => (
+              <details key={q}>
+                <summary>
+                  {q}
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <p>{a}</p>
+              </details>
+            ))}
           </div>
         </section>
-
-        {/* FAQ */}
-        <section className="bg-parchment py-28">
-          <div className={wrap}>
-            <h2 className={`${h2} mb-14 text-center`}>Pytania i odpowiedzi</h2>
-            <div className="grid gap-x-16 gap-y-10 md:grid-cols-2">
-              {faq.map(([q, a]) => (
-                <div key={q} className="border-t border-[#d2d2d7] pt-6">
-                  <h3 className="mb-2 text-[21px] font-semibold">{q}</h3>
-                  <p className="text-muted">{a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FINAŁ: znowu noc nad miastem */}
-        <section id="kontakt" className="relative overflow-hidden bg-[#09090b] pb-48 pt-32 text-center text-parchment">
-          <AmberGlow />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%]">
-            <NightCity density={0.06} />
-          </div>
-          <div className={`${wrap} relative`}>
-            <TextReveal
-              as="h2"
-              text="Następny telefon, którego nie odbierzesz, odbierzemy za Ciebie."
-              className={`${h2} mx-auto max-w-[16ch] text-[clamp(36px,5.4vw,64px)] leading-[1.05]`}
-            />
-            <p className="mx-auto mt-[18px] max-w-[36ch] text-[21px] text-muted-dark">15 minut rozmowy. Pokażemy to na Twoim przykładzie.</p>
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-3.5">
-              <a href={site.calendlyUrl} className={`${pill} bg-amber text-ink`}>Umów rozmowę</a>
-              <a href={`tel:${site.demoPhone}`} className="text-[19px] text-amber hover:underline">Zadzwoń do demo ›</a>
-            </div>
+        <section className="nk-ending">
+          <div className="nk-wrap">
+            <p className="nk-eyebrow">
+              NOKTURN / ZAWSZE JEST SPOSÓB, BY ODPOWIEDZIEĆ
+            </p>
+            <h2>
+              Ty zajmij się firmą.
+              <br />
+              <em>My zadbamy o pierwsze „dzień dobry”.</em>
+            </h2>
+            <a className="nk-button" href="#demo">
+              Wypróbuj prezentację <span aria-hidden="true">↗</span>
+            </a>
+            <p className="nk-fine">
+              Wersja demonstracyjna · bez logowania i podawania danych
+            </p>
           </div>
         </section>
       </main>
-
-      <footer className="bg-parchment px-5 pb-28 pt-6 text-xs leading-relaxed text-muted md:pb-10">
-        <div className="mx-auto flex max-w-[1080px] flex-col gap-3">
-          <p className="border-b border-[#d2d2d7] pb-3">
-            Rozmowy prowadzi wirtualny asystent. Klient jest o tym informowany na początku połączenia.
-          </p>
-          <div className="flex flex-wrap justify-between gap-x-6 gap-y-2">
-            <span className="inline-flex items-center gap-2"><LogoMark size={14} dark={false} />© 2026 NOKTURN. {site.company}, NIP {site.nip}.</span>
-            <nav aria-label="Informacje prawne" className="flex flex-wrap gap-x-5 gap-y-2 text-[#424245]">
-              <Link href="/polityka-prywatnosci" className="hover:underline">Polityka prywatności</Link>
-              <Link href="/regulamin" className="hover:underline">Regulamin</Link>
-              <a href={`mailto:${site.email}`} className="hover:underline">{site.email}</a>
-            </nav>
-          </div>
-        </div>
+      <footer className="nk-wrap nk-footer">
+        <Logo />
+        <span>Telefon i czat. Po Twojej stronie.</span>
+        <span>© 2026 NOKTURN · Demo koncepcji</span>
       </footer>
-    </>
+    </div>
   );
 }
