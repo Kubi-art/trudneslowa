@@ -1737,3 +1737,203 @@
     transition: none;
   }
 }
+
+/* Product-led refinement: the phone and calculator carry the story. */
+.nk h1,
+.nk h1 em {
+  letter-spacing: -0.04em;
+}
+.nk-phone-stage {
+  position: relative;
+  padding: 12px 0 0;
+}
+.nk-phone-stage > div {
+  width: min(300px, 78vw);
+}
+.nk-phone-caption {
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+  margin: 22px 0 0;
+}
+.nk-phone-intro {
+  margin: auto 8px;
+  text-align: center;
+}
+.nk-phone-intro > span {
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  font-size: 14px;
+}
+.nk-phone-intro > p {
+  line-height: 1.7;
+  margin-top: 22px;
+  color: #c9c5b9;
+}
+.nk-products {
+  gap: 56px;
+}
+.nk-product,
+.nk-product:hover,
+.nk-product:focus-within {
+  padding: 24px 0;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+}
+.nk-product::before {
+  content: none;
+}
+.nk-product-label {
+  font-size: 14px;
+  color: var(--gold);
+}
+.nk-product-visual {
+  height: 176px;
+  margin: 18px 0;
+}
+.nk-section-heading h2 {
+  max-width: 720px;
+}
+.nk-calculator-section {
+  background: #e9e3d7;
+  color: #28251f;
+  padding: 100px 0;
+}
+.nk-calculator-section h2 span,
+.nk-calculator-section .nk-section-heading > p {
+  color: #625c51;
+}
+.nk-calculator {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: start;
+}
+.nk-calc-inputs {
+  display: grid;
+  gap: 28px;
+}
+.nk-calc-field label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.nk-calc-field output {
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.nk-calc-field input {
+  width: 100%;
+  min-height: 44px;
+  accent-color: #875b28;
+  cursor: pointer;
+}
+.nk-range-limits {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #625c51;
+  margin-top: -5px;
+}
+.nk-calc-reset {
+  justify-self: start;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  min-height: 44px;
+  background: none;
+  color: #625c51;
+  border: 0;
+  padding: 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+.nk-calc-result {
+  border-top: 1px solid #c4bba9;
+  padding-top: 20px;
+}
+.nk-calc-result > p {
+  color: #625c51;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 18px;
+}
+.nk-calc-total {
+  font-size: clamp(38px, 4.6vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  display: block;
+  margin: 8px 0 24px;
+}
+.nk-calc-result details {
+  margin: 20px 0;
+  font-size: 14px;
+}
+.nk-calc-result summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 12px 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.nk-calc-result details p {
+  line-height: 1.7;
+}
+.nk-calc-result .nk-calc-note {
+  font-size: 12px;
+  line-height: 1.7;
+}
+.nk-calculator-section :focus-visible {
+  outline: 2px solid #875b28;
+  outline-offset: 5px;
+}
+.nk-calculator-section .nk-text-link:hover {
+  color: #875b28;
+}
+.nk .nk-reveal-ready,
+.nk .nk-revealed {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.nk ::selection {
+  background: #efb96c;
+  color: #24211a;
+}
+@media (max-width: 900px) {
+  .nk-calculator {
+    gap: 36px;
+  }
+  .nk-nav-links {
+    gap: 16px;
+  }
+}
+@media (max-width: 760px) {
+  .nk-hero {
+    padding-top: 52px;
+    padding-bottom: 56px;
+    gap: 44px;
+  }
+  .nk-products {
+    gap: 24px;
+  }
+  .nk-calculator {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .nk-calculator-section {
+    padding: 64px 0;
+  }
+  .nk-calc-total {
+    font-size: clamp(36px, 10vw, 60px);
+  }
+  .nk-calc-field label {
+    font-size: 14px;
+  }
+}

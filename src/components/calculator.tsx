@@ -1,51 +1,50 @@
 "use client";
 
-// Kwota przewija się jak licznik: "Number Ticker Currency Counter" z 21st.dev.
-import NumberFlow from "@number-flow/react";
-import NumberTicker from "@/components/ui/number-ticker-02";
 import { useId, useState } from "react";
+import NumberTicker from "@/components/ui/number-ticker-02";
 
-const WEEKS_PER_MONTH = 4.3;
-
-// Po „około” zawsze dopełniacz: około jednego klienta, około 2 klientów, około 5 klientów.
-function klientow(n: number) {
-  return n === 1 ? "jednego klienta" : null;
-}
+const pln = new Intl.NumberFormat("pl-PL", {
+  style: "currency",
+  currency: "PLN",
+  maximumFractionDigits: 0,
+});
 
 function Slider({
   label,
   value,
   display,
-  min,
   max,
-  step,
+  step = 1,
   onChange,
 }: {
   label: string;
   value: number;
-  display: React.ReactNode;
-  min: number;
+  display: string;
   max: number;
-  step: number;
-  onChange: (v: number) => void;
+  step?: number;
+  onChange: (value: number) => void;
 }) {
   const id = useId();
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="flex justify-between gap-3 font-semibold">
-        <span>{label}</span>
-        <span className="tabular-nums">{display}</span>
+    <div className="nk-calc-field">
+      <label htmlFor={id}>
+        {label}
+        <output htmlFor={id}>{display}</output>
       </label>
       <input
         id={id}
         type="range"
-        min={min}
+        min={0}
         max={max}
         step={step}
         value={value}
+        aria-valuetext={display}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="h-[30px] w-full"
       />
+      <div className="nk-range-limits" aria-hidden="true">
+        <span>0</span>
+        <span>{max.toLocaleString("pl-PL")}</span>
+      </div>
     </div>
   );
 }
@@ -53,52 +52,85 @@ function Slider({
 export function Calculator() {
   const [missed, setMissed] = useState(8);
   const [value, setValue] = useState(600);
-  const [conv, setConv] = useState(40);
-
-  const jobs = Math.round(missed * WEEKS_PER_MONTH * (conv / 100));
-  const lost = Math.round((missed * WEEKS_PER_MONTH * (conv / 100) * value) / 100) * 100;
-  const pln = { style: "currency", currency: "PLN", maximumFractionDigits: 0 } as const;
-
+  const [conversion, setConversion] = useState(40);
+  const monthlyCalls = missed * 4.3;
+  const estimatedOrders = (monthlyCalls * conversion) / 100;
+  const estimatedValue = Math.round(estimatedOrders * value);
   return (
-    <div className="grid gap-5 md:grid-cols-2">
-      <div className="flex flex-col gap-[30px] rounded-[18px] border border-hairline bg-white p-8">
-        <Slider label="Nieodebrane telefony w tygodniu" value={missed} display={missed} min={1} max={40} step={1} onChange={setMissed} />
+    <div className="nk-calculator">
+      <div className="nk-calc-inputs">
         <Slider
-          label="Ile zarabiasz na jednym kliencie"
+          label="Nieodebrane połączenia w tygodniu"
+          value={missed}
+          display={String(missed)}
+          max={40}
+          onChange={setMissed}
+        />
+        <Slider
+          label="Średnia wartość zlecenia"
           value={value}
-          display={new Intl.NumberFormat("pl-PL", pln).format(value)}
-          min={100}
+          display={pln.format(value)}
           max={3000}
           step={50}
           onChange={setValue}
         />
-        <Slider label="Ilu z dzwoniących zostałoby klientami" value={conv} display={`${conv}%`} min={10} max={80} step={5} onChange={setConv} />
-      </div>
-
-      <div className="flex min-h-[280px] flex-col items-center justify-center gap-1.5 rounded-[18px] bg-parchment p-8 text-center">
-        <p className="text-muted">Miesięcznie tracisz około</p>
-        <NumberTicker
-          value={lost}
-          currency="PLN"
-          decimals={0}
-          locales="pl-PL"
-          className="text-[clamp(56px,7vw,80px)] font-semibold leading-[1.05] tracking-[-0.04em] tabular-nums"
+        <Slider
+          label="Jaki procent zapytań kończy się zleceniem?"
+          value={conversion}
+          display={`${conversion}%`}
+          max={100}
+          step={5}
+          onChange={setConversion}
         />
-        <p className="text-muted">
-          {jobs === 0 ? (
-            "czyli mniej niż jeden klient w miesiącu."
-          ) : (
-            <>
-              {klientow(jobs) ? (
-                <>czyli około {klientow(jobs)}, który idzie do konkurencji.</>
-              ) : (
-                <>
-                  czyli około <NumberFlow value={jobs} locales="pl-PL" /> klientów, którzy idą do konkurencji.
-                </>
-              )}
-            </>
-          )}
+        <button
+          className="nk-calc-reset"
+          type="button"
+          onClick={() => {
+            setMissed(8);
+            setValue(600);
+            setConversion(40);
+          }}
+        >
+          Przywróć przykładowe wartości
+        </button>
+      </div>
+      <div className="nk-calc-result">
+        <p>Szacowana wartość potencjalnych zleceń / miesiąc</p>
+        <div aria-live="polite" aria-atomic="true">
+          <NumberTicker
+            value={estimatedValue}
+            currency="PLN"
+            decimals={0}
+            locales="pl-PL"
+            className="nk-calc-total"
+          />
+        </div>
+        <p>
+          Przy tych założeniach: około{" "}
+          <strong>{Math.round(monthlyCalls)} połączeń</strong> i{" "}
+          <strong>
+            {estimatedOrders.toLocaleString("pl-PL", {
+              maximumFractionDigits: 1,
+            })}{" "}
+            zleceń
+          </strong>{" "}
+          w miesiącu.
         </p>
+        <details>
+          <summary>Jak to liczymy?</summary>
+          <p>
+            {missed} połączeń × 4,3 tygodnia × {conversion}% ×{" "}
+            {pln.format(value)}. Wynik zaokrąglamy do pełnych złotych.
+          </p>
+        </details>
+        <p className="nk-calc-note">
+          To ilustracja oparta na Twoich założeniach, nie prognoza przychodu ani
+          oszczędności z AI. Część klientów może zadzwonić ponownie. Wynik nie
+          uwzględnia kosztów obsługi ani wdrożenia.
+        </p>
+        <a href="#wdrozenie" className="nk-text-link">
+          Zobacz, jak wygląda wdrożenie <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   );

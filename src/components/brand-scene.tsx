@@ -35,7 +35,6 @@ export function BrandScene({ src }: { src: string }) {
       </motion.div>
       <div className="nk-brand-shade" />
       <div className="nk-wrap nk-brand-copy">
-        <p className="nk-eyebrow">ŚWIATŁO ZOSTAJE WŁĄCZONE</p>
         <h2 id="brand-scene-title">
           Koniec Twojego dnia.
           <br />
@@ -80,7 +79,8 @@ export function MobileMenu() {
           {[
             ["#rozwiazania", "Rozwiązania"],
             ["#demo", "Interaktywne demo"],
-            ["#wdrozenie", "Jak zaczynamy"],
+            ["#kalkulator", "Kalkulator"],
+            ["#wdrozenie", "Wdrożenie"],
           ].map(([href, label]) => (
             <a href={href} key={href} onClick={() => setOpen(false)}>
               {label}

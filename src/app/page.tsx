@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { PhoneCall } from "@/components/phone-call";
+import { Calculator } from "@/components/calculator";
 import { Logo } from "@/components/logo";
-import { ProductDemo, Reveal, SignalArt } from "@/components/product-demo";
+import { ProductDemo, Reveal } from "@/components/product-demo";
 import "./redesign.css";
 import { BrandScene, MobileMenu } from "@/components/brand-scene";
 
@@ -40,7 +42,8 @@ export default function Home() {
           <div className="nk-nav-links">
             <a href="#rozwiazania">Rozwiązania</a>
             <a href="#demo">Demo</a>
-            <a href="#wdrozenie">Jak zaczynamy</a>
+            <a href="#kalkulator">Kalkulator</a>
+            <a href="#wdrozenie">Wdrożenie</a>
           </div>
           <MobileMenu />
           <a className="nk-button nk-button-small" href="#demo">
@@ -51,10 +54,6 @@ export default function Home() {
       <main id="tresc">
         <section className="nk-hero nk-wrap">
           <div className="nk-hero-copy">
-            <p className="nk-eyebrow">
-              <span className="nk-status" /> TWÓJ KONTAKT Z KLIENTEM. TAKŻE PO
-              GODZINACH.
-            </p>
             <h1>
               Dobry kontakt.
               <br />
@@ -80,76 +79,17 @@ export default function Home() {
               Po polsku. W Twoim stylu. Z wiedzą o Twojej firmie.
             </p>
           </div>
-          <div
-            className="nk-hero-art"
-            aria-label="Przykład: telefon i czat przekazują zapytania do firmy"
-          >
-            <div className="nk-art-grid" />
-            <div className="nk-orbit nk-orbit-one" />
-            <div className="nk-orbit nk-orbit-two" />
-            <div className="nk-core">
-              <span className="nk-core-mark">
-                <i />
-                <i />
-                <i />
-                <i />
-              </span>
-            </div>
-            <div className="nk-float nk-voice">
-              <div className="nk-card-top">
-                <span className="nk-icon">↗</span>
-                <span>
-                  Asystentka telefoniczna<small>Przykładowe połączenie</small>
-                </span>
-                <span className="nk-status" />
-              </div>
-              <SignalArt />
-              <p>„Dzień dobry, w czym mogę pomóc?”</p>
-            </div>
-            <div className="nk-float nk-chat">
-              <div className="nk-card-top">
-                <span className="nk-icon">⌁</span>
-                <span>
-                  Chatbot na stronie
-                  <small>Pomoc w zasięgu jednej wiadomości</small>
-                </span>
-              </div>
-              <p className="nk-bubble">Czy mogę zapytać o ofertę?</p>
-              <p className="nk-bubble nk-answer">
-                Jasne. Powiedz, czego potrzebujesz.
-              </p>
-            </div>
-            <div className="nk-float nk-notification">
-              <span className="nk-check">✓</span>
-              <div>
-                Wszystko, co warto wiedzieć.
-                <small>Nowe zapytanie. Szczegóły w jednym miejscu.</small>
-              </div>
-            </div>
-            <span className="nk-art-caption">
-              DWA KANAŁY. JEDEN SPOKOJNIEJSZY DZIEŃ.
-            </span>
+          <div className="nk-phone-stage">
+            <PhoneCall />
+            <p className="nk-phone-caption">
+              Przykładowy przebieg rozmowy · bez dźwięku
+            </p>
           </div>
         </section>
-        <div className="nk-strip">
-          <div className="nk-wrap">
-            <span>Dobry kontakt nie kończy się o 17:00.</span>
-            <span>
-              Telefon <b>↗</b>
-            </span>
-            <span>
-              Czat <b>↗</b>
-            </span>
-            <span>
-              Twoja firma <b>✓</b>
-            </span>
-          </div>
-        </div>
         <section className="nk-section nk-wrap" id="rozwiazania">
           <Reveal>
             <div className="nk-section-heading">
               <div>
-                <p className="nk-eyebrow">01 / ROZWIĄZANIA</p>
                 <h2>
                   Klient wybiera kanał.
                   <br />
@@ -169,7 +109,6 @@ export default function Home() {
                 <article className="nk-product">
                   <div className="nk-product-label">
                     <span>{label}</span>
-                    <span>{n}</span>
                   </div>
                   <div
                     className={`nk-product-visual ${i === 1 ? "nk-visual-chat" : ""}`}
@@ -247,11 +186,10 @@ export default function Home() {
             <Reveal>
               <div className="nk-section-heading">
                 <div>
-                  <p className="nk-eyebrow">02 / ZOBACZ W PRAKTYCE</p>
                   <h2>
-                    Mniej opowiadania.
+                    Zobacz rozmowę.
                     <br />
-                    <span>Więcej pokazania.</span>
+                    <span>Sprawdź, co trafia do firmy.</span>
                   </h2>
                 </div>
                 <p>
@@ -263,16 +201,35 @@ export default function Home() {
             <ProductDemo />
           </div>
         </section>
+        <section
+          className="nk-calculator-section"
+          id="kalkulator"
+          aria-labelledby="calculator-heading"
+        >
+          <div className="nk-wrap">
+            <div className="nk-section-heading">
+              <h2 id="calculator-heading">
+                Ile mogą być warte
+                <br />
+                <span>nieodebrane telefony?</span>
+              </h2>
+              <p>
+                Zmień trzy założenia i sprawdź skalę zapytań w swojej firmie. To
+                punkt wyjścia do rozmowy o wdrożeniu.
+              </p>
+            </div>
+            <Calculator />
+          </div>
+        </section>
         <BrandScene src="/images/nokturn-after-hours.webp" />
         <section className="nk-section nk-wrap" id="wdrozenie">
           <Reveal>
             <div className="nk-section-heading">
               <div>
-                <p className="nk-eyebrow">03 / PROSTY POCZĄTEK</p>
                 <h2>
-                  Twoja wiedza.
+                  Od wiedzy o firmie
                   <br />
-                  <span>Nasz sposób na jej użycie.</span>
+                  <span>do pierwszej rozmowy.</span>
                 </h2>
               </div>
               <p>
@@ -309,51 +266,8 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section className="nk-control-section">
-          <div className="nk-wrap nk-control">
-            <Reveal>
-              <p className="nk-eyebrow">AUTOMATYZACJA Z WYRAŹNYMI GRANICAMI</p>
-              <h2>
-                Twoja firma.
-                <br />
-                Twoje zasady.
-                <br />
-                <span>Twój spokojniejszy dzień.</span>
-              </h2>
-              <p>
-                Dobry asystent wie także, kiedy poprosić o pomoc. Projektujemy
-                rozmowy tak, aby człowiek pozostał częścią obsługi.
-              </p>
-            </Reveal>
-            <div className="nk-control-list">
-              {[
-                [
-                  "Wiedza, którą zatwierdzasz",
-                  "Odpowiedzi opieramy na materiałach Twojej firmy. Zakres informacji ustalamy podczas wdrożenia.",
-                ],
-                [
-                  "Jasne przekazanie do człowieka",
-                  "Gdy sprawa wykracza poza scenariusz, asystent zbiera szczegóły do dalszego kontaktu.",
-                ],
-                [
-                  "Kontakt w stylu Twojej marki",
-                  "Spokojny, konkretny lub bardziej swobodny. Sposób rozmowy dopasowujemy do Twoich klientów.",
-                ],
-              ].map(([t, d]) => (
-                <div key={t}>
-                  <span className="nk-check">✓</span>
-                  <div>
-                    <h3>{t}</h3>
-                    <p>{d}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
         <section className="nk-section nk-wrap nk-faq">
           <div>
-            <p className="nk-eyebrow">WARTO WIEDZIEĆ</p>
             <h2>
               Kilka prostych
               <br />
@@ -395,9 +309,6 @@ export default function Home() {
         </section>
         <section className="nk-ending">
           <div className="nk-wrap">
-            <p className="nk-eyebrow">
-              NOKTURN / ZAWSZE JEST SPOSÓB, BY ODPOWIEDZIEĆ
-            </p>
             <h2>
               Ty zajmij się firmą.
               <br />
