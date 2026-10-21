@@ -54,9 +54,8 @@ export function TextReveal({
       ? text.split(/(\s+)/).filter((u) => u.length > 0)
       : Array.from(text);
   const animated = units.filter((u) => !/^\s+$/.test(u)).length;
-  const step = animated > 1 ? Math.min(stagger, maxDuration / (animated - 1)) : 0;
-
-  let index = -1;
+  const step =
+    animated > 1 ? Math.min(stagger, maxDuration / (animated - 1)) : 0;
 
   return (
     <Tag ref={ref} className={className}>
@@ -64,7 +63,9 @@ export function TextReveal({
       <span aria-hidden="true">
         {units.map((unit, i) => {
           if (/^\s+$/.test(unit)) return <span key={i}>{unit}</span>;
-          index += 1;
+          const index = units
+            .slice(0, i)
+            .filter((u) => !/^\s+$/.test(u)).length;
           if (reduce) return <span key={i}>{unit}</span>;
           return (
             <motion.span
@@ -73,10 +74,19 @@ export function TextReveal({
               initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
               animate={
                 active
-                  ? { opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none", transform: "none" } }
+                  ? {
+                      opacity: 1,
+                      y: 0,
+                      filter: "blur(0px)",
+                      transitionEnd: { filter: "none", transform: "none" },
+                    }
                   : undefined
               }
-              transition={{ duration: 0.6, delay: index * step, ease: [0.2, 0.65, 0.3, 0.9] }}
+              transition={{
+                duration: 0.6,
+                delay: index * step,
+                ease: [0.2, 0.65, 0.3, 0.9],
+              }}
             >
               {unit}
             </motion.span>
