@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { ProductDemo, Reveal, SignalArt } from "@/components/product-demo";
 import "./redesign.css";
+import { BrandScene, MobileMenu } from "@/components/brand-scene";
 
 const features = [
   [
@@ -41,6 +42,7 @@ export default function Home() {
             <a href="#demo">Demo</a>
             <a href="#wdrozenie">Jak zaczynamy</a>
           </div>
+          <MobileMenu />
           <a className="nk-button nk-button-small" href="#demo">
             Zobacz demo <span aria-hidden="true">↗</span>
           </a>
@@ -54,15 +56,15 @@ export default function Home() {
               GODZINACH.
             </p>
             <h1>
-              Twoja firma
+              Dobry kontakt.
               <br />
-              zawsze ma
+              Nawet kiedy
               <br />
-              <em>co odpowiedzieć.</em>
+              <em>Ciebie nie ma.</em>
             </h1>
             <p className="nk-lead">
-              Asystentka telefoniczna i chatbot AI.
-              <br className="nk-desktop" /> Odbierają pytania. Zbierają
+              Asystentka telefoniczna i chatbot AI dla firm.
+              <br className="nk-desktop" /> Odpowiadają na pytania. Przyjmują
               zgłoszenia.
               <br className="nk-desktop" /> Dają Ci przestrzeń na Twoją pracę.
             </p>
@@ -261,6 +263,7 @@ export default function Home() {
             <ProductDemo />
           </div>
         </section>
+        <BrandScene src="/images/nokturn-after-hours.webp" />
         <section className="nk-section nk-wrap" id="wdrozenie">
           <Reveal>
             <div className="nk-section-heading">

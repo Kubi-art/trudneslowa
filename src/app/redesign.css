@@ -1411,3 +1411,329 @@
     transform: none;
   }
 }
+
+/* Editorial refinement: one type system, clearer controls, one atmospheric image. */
+.nk {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --gold: #efb96c;
+  --soft: #b4b1a7;
+}
+.nk h1 {
+  font-size: clamp(52px, 5.25vw, 74px);
+  letter-spacing: -0.058em;
+  line-height: 1.07;
+}
+.nk h1 em {
+  letter-spacing: -0.055em;
+}
+.nk-hero-copy .nk-eyebrow {
+  max-width: 390px;
+  font-size: 10px;
+}
+.nk-lead {
+  font-size: 17px;
+  max-width: 400px;
+}
+.nk-fine {
+  font-size: 12px;
+}
+.nk-product {
+  position: relative;
+  background: linear-gradient(145deg, #24231f, #191917 62%);
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+  overflow: hidden;
+}
+.nk-product:hover,
+.nk-product:focus-within {
+  border-color: #efb96c55;
+  box-shadow: 0 14px 50px #0002;
+}
+.nk-product::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 15% 0%, #efb96c12, transparent 58%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.nk-product:hover::before,
+.nk-product:focus-within::before {
+  opacity: 1;
+}
+.nk-product > a {
+  position: relative;
+}
+.nk-product-label {
+  font-size: 12px;
+}
+.nk-product ul {
+  font-size: 13px;
+}
+.nk-text-link {
+  font-size: 14px;
+}
+.nk-button {
+  font-size: 14px;
+}
+.nk-section-heading > p {
+  font-size: 15px;
+  max-width: 330px;
+}
+.nk-steps p {
+  font-size: 14px;
+}
+.nk-control-list p {
+  font-size: 14px;
+}
+.nk-faq summary {
+  font-size: 15px;
+}
+.nk-faq details p {
+  font-size: 14px;
+}
+.nk-demo-controls > .nk-button {
+  min-height: 44px;
+}
+.nk-next {
+  font-size: 12px !important;
+  min-height: 44px;
+}
+.nk-demo-title small {
+  font-size: 11px;
+}
+.nk-message p {
+  font-size: 14px;
+}
+.nk-message small {
+  font-size: 10px;
+}
+.nk-summary > p:not(.nk-eyebrow) {
+  font-size: 14px;
+}
+.nk-summary-card dl > div {
+  font-size: 12px;
+}
+.nk-summary-status {
+  font-size: 10px;
+}
+.nk-summary-footer {
+  font-size: 12px;
+}
+.nk-summary .nk-demo-note {
+  font-size: 11px !important;
+}
+.nk-messages {
+  min-height: 400px;
+}
+.nk-summary-card h4 {
+  font-size: 17px;
+}
+.nk-demo-tag {
+  font-size: 9px;
+}
+.nk-demo-toolbar .nk-industry-label {
+  font-size: 12px;
+}
+.nk-brand-scene {
+  position: relative;
+  min-height: 560px;
+  isolation: isolate;
+  overflow: hidden;
+  background: #171713;
+  color: #f5f3ed;
+}
+.nk-brand-photo {
+  position: absolute;
+  inset: -8% 0;
+  z-index: -3;
+}
+.nk-brand-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.nk-brand-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, #10100fdb 0%, #10100f9c 35%, #10100f20 70%),
+    linear-gradient(0deg, #10100f70, transparent 35%);
+}
+.nk-brand-copy {
+  padding-block: 120px;
+}
+.nk-brand-copy h2 {
+  font-size: clamp(32px, 3.6vw, 49px);
+  max-width: 650px;
+  line-height: 1.18;
+}
+.nk-brand-copy > p:not(.nk-eyebrow) {
+  font-size: 15px;
+  line-height: 1.8;
+  max-width: 350px;
+  color: #d1ccc0;
+  margin-top: 25px;
+}
+.nk-brand-copy > .nk-text-link {
+  margin-top: 20px;
+  color: var(--gold);
+}
+.nk-scene-caption {
+  position: absolute;
+  right: 48px;
+  bottom: 30px;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: #ded4c0;
+}
+.nk-mobile-menu {
+  display: none;
+}
+.nk-menu-toggle {
+  border: 1px solid #ffffff26;
+  border-radius: 7px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  color: #e7dfcd;
+  font-size: 22px !important;
+}
+.nk-mobile-panel {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  padding: 15px 24px 24px;
+  background: #191917;
+  border-bottom: 1px solid #efb96c45;
+  box-shadow: 0 20px 40px #0006;
+}
+.nk-mobile-panel a {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 0;
+  border-bottom: 1px solid #ffffff17;
+  font-size: 16px;
+}
+.nk-mobile-panel a span {
+  color: var(--gold);
+}
+.nk-mobile-panel p {
+  font-size: 11px;
+  color: var(--soft);
+  margin-top: 20px;
+}
+@media (max-width: 760px) {
+  .nk h1 {
+    font-size: clamp(43px, 9vw, 64px);
+    line-height: 1.08;
+  }
+  .nk-hero-copy .nk-eyebrow {
+    font-size: 9px;
+  }
+  .nk-hero {
+    padding-top: 42px;
+  }
+  .nk-lead {
+    font-size: 16px;
+  }
+  .nk-fine {
+    font-size: 11px;
+  }
+  .nk-mobile-menu {
+    display: block;
+    margin-left: auto;
+    order: 3;
+  }
+  .nk-nav {
+    gap: 10px;
+  }
+  .nk-nav > .nk-button {
+    margin-left: auto;
+    font-size: 11px;
+    min-height: 44px;
+  }
+  .nk-nav .font-bold {
+    font-size: 12px;
+  }
+  .nk-actions {
+    gap: 12px;
+  }
+  .nk-actions .nk-button {
+    font-size: 13px;
+  }
+  .nk-section-heading > p {
+    font-size: 14px;
+  }
+  .nk-text-link {
+    font-size: 13px;
+  }
+  .nk-brand-scene {
+    min-height: 570px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .nk-brand-photo img {
+    object-position: 65% center;
+  }
+  .nk-brand-shade {
+    background: linear-gradient(
+      0deg,
+      #10100ff5 0%,
+      #10100fb3 48%,
+      #10100f10 100%
+    );
+  }
+  .nk-brand-copy {
+    padding-top: 200px;
+    padding-bottom: 70px;
+    width: 100%;
+  }
+  .nk-brand-copy h2 {
+    font-size: 35px;
+  }
+  .nk-brand-copy > p:not(.nk-eyebrow) {
+    font-size: 14px;
+    max-width: 330px;
+  }
+  .nk-scene-caption {
+    right: 24px;
+    bottom: 23px;
+    font-size: 8px;
+  }
+  .nk-message p {
+    font-size: 13px;
+  }
+  .nk-messages {
+    min-height: 440px;
+  }
+  .nk-demo-controls {
+    gap: 10px;
+  }
+  .nk-next {
+    font-size: 11px !important;
+  }
+  .nk-demo-tag {
+    font-size: 8px;
+  }
+  .nk-summary > p:not(.nk-eyebrow) {
+    font-size: 13px;
+  }
+  .nk-product > p {
+    font-size: 14px;
+  }
+  .nk-footer {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nk-product,
+  .nk-product::before {
+    transition: none;
+  }
+}
