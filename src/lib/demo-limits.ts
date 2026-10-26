@@ -15,15 +15,16 @@ return 10 - count
 
 export function demoConfigured() {
   return process.env.DEMO_ENABLED === "true" && !!process.env.OPENAI_API_KEY &&
-    !!process.env.UPSTASH_REDIS_REST_URL && !!process.env.UPSTASH_REDIS_REST_TOKEN &&
+    !!(process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL) &&
+    !!(process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN) &&
     (process.env.DEMO_LIMIT_SECRET?.length ?? 0) >= 32;
 }
 
 async function redis(command: (string | number)[]) {
-  const url = process.env.UPSTASH_REDIS_REST_URL!;
+  const url = (process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL)!;
   if (!url.startsWith("https://")) throw new Error("Invalid limiter configuration");
   const response = await fetch(url, {
-    method: "POST", headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`, "Content-Type": "application/json" },
+    method: "POST", headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN}`, "Content-Type": "application/json" },
     body: JSON.stringify(command), cache: "no-store", signal: AbortSignal.timeout(5000),
   });
   if (!response.ok) throw new Error("Limiter unavailable");

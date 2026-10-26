@@ -8,7 +8,7 @@ Maja obsługuje fikcyjne firmy Czysty Kąt, Studio Forma i Prosty Bilans. Wiedza
 
 Sekrety serwerowe (bez NEXT_PUBLIC):
 - OPENAI_API_KEY: klucz projektu OpenAI.
-- UPSTASH_REDIS_REST_URL i UPSTASH_REDIS_REST_TOKEN: trwała baza Redis podłączona do projektu.
+- UPSTASH_REDIS_REST_URL i UPSTASH_REDIS_REST_TOKEN: trwała baza Redis podłączona do projektu. Integracja Vercel może zamiast nich ustawić KV_REST_API_URL i KV_REST_API_TOKEN — te nazwy również są obsługiwane. Nie używać tokena READ_ONLY.
 - DEMO_LIMIT_SECRET: losowy sekret minimum 32 znaki.
 - DEMO_ENABLED=true: dopiero po konfiguracji i testach.
 
