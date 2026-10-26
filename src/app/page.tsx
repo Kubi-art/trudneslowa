@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LiveDemo } from "@/components/live-demo";
 import { PhoneCall } from "@/components/phone-call";
 import { Calculator } from "@/components/calculator";
 import { Logo } from "@/components/logo";
@@ -198,6 +199,8 @@ export default function Home() {
                 </p>
               </div>
             </Reveal>
+            <LiveDemo />
+            <h3 className="nk-scripted-title">Zobacz także przygotowaną symulację</h3>
             <ProductDemo />
           </div>
         </section>
