@@ -1,6 +1,6 @@
 # NOKTURN — agent demo
 
-Czat tekstowy zaimplementowany, domyślnie wyłączony. Głos nadal jest przygotowaną symulacją.
+Czat tekstowy i demo głosowe zaimplementowane. Wymagają aktywacji, rzeczywistych testów dostawcy oraz uzupełnienia danych operatora. Przygotowane symulacje są odrębne.
 
 Maja obsługuje fikcyjne firmy Czysty Kąt, Studio Forma i Prosty Bilans. Wiedza i zasady: src/lib/demo-agent.ts. GPT-5 mini przez Responses API, store:false, bez narzędzi i rzeczywistych działań. Treść renderowana jako tekst. Zmiana branży czyści kontekst.
 
@@ -34,4 +34,22 @@ Przed aktywacją uzupełnić dane administratora i politykę: wiadomości trafia
 
 ## Głos
 
-Następny etap: Realtime przez WebRTC, osobny limit kosztów oraz serwerowe zakończenie sesji. Jeszcze niewdrożony. Timer w przeglądarce nie jest twardym ograniczeniem kosztu.
+Rozmowa turami zaimplementowana — szczegóły w aktualizacji poniżej. Strumieniowy Realtime i połączenia telefoniczne nie są wdrożone.
+
+## Aktualizacja 27.10.2026 — demo głosowe
+
+Zaimplementowano /api/demo/voice i nagrywanie w AudioWorklet. Po kliknięciu użytkownik nagrywa 1–20 s; serwer przyjmuje wyłącznie kanoniczny WAV PCM16 mono 16 kHz i oblicza długość z rzeczywistych bajtów. JSON ograniczony do 900 KB. Przetwarzanie: gpt-transcribe → wspólne generateDemoAnswer (gpt-5-mini) → gpt-4o-mini-tts/coral. TTS czyta maksymalnie 1200 znaków; awaria TTS zwraca odpowiedź tekstową bez płatnego ponawiania. To rozmowa turami, nie połączenie PSTN ani strumieniowy Realtime.
+
+VOICE_DEMO_ENABLED=true włącza głos dodatkowo do DEMO_ENABLED. Domyślnie wyłączony. Czat i głos współdzielą istniejące liczniki (bez resetowania puli). Blokada głosu 100 s, tekstu 40 s; zwalnianie porównuje losowy token właściciela, żeby spóźnione żądanie nie usuwało nowej blokady. Timeouty usług 20+30+20 s, funkcji 90 s. Klient nie zapisuje nagrań na dysku; anulowanie zamyka mikrofon, porzucenie komponentu również. Po limicie czasu nagranie jest automatycznie wysyłane, zgodnie z informacją w polityce.
+
+Model gpt-4o-mini-tts jest oznaczony jako deprecated w katalogu OpenAI. Przed długoterminowym uruchomieniem należy potwierdzić datę wyłączenia i migrację generowania mowy. Nie potwierdzono jeszcze dostępności gpt-transcribe ani TTS na konkretnym kluczu użytkownika; konieczny realny test.
+
+Wyniki lokalne: 5 testów przechodzi (walidacja rozmów, błędy dostawcy, konfiguracja Marketplace, rzeczywista długość WAV, przepływ głosowy i fallback TTS), lint i build. Są to testy z atrapami, nie dowód jakości głosu ani połączenia produkcyjnego. Brak testu odsłuchowego, mobilnego i rzeczywistej rozmowy OpenAI: chroniony podgląd Vercel wymaga autoryzowanego dostępu. Nie wyłączać Deployment Protection w celu testowania.
+
+Polityka i regulamin rozszerzone o dane głosu, transkrypcję, OpenAI i Redis. Wciąż wymagają danych operatora, kontaktu oraz potwierdzenia retencji infrastruktury i warunków transferów. Nie oznaczać dokumentów jako finalnych przed uzupełnieniem.
+
+Źródła sprawdzone 27.10.2026:
+- https://developers.openai.com/api/docs/guides/speech-to-text
+- https://developers.openai.com/api/docs/guides/text-to-speech
+- https://developers.openai.com/api/docs/guides/your-data
+- https://eur-lex.europa.eu/eli/reg/2016/679/oj

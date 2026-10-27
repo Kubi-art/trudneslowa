@@ -1,4 +1,4 @@
-import { createHmac } from "node:crypto";
+import { createHmac, randomUUID } from "node:crypto";
 
 // One atomic reservation across all serverless instances. Failed provider calls
 // also consume a slot. No transcript or raw IP is stored in Redis.
@@ -9,7 +9,7 @@ if redis.call('EXISTS', KEYS[3]) == 1 then return -3 end
 redis.call('INCR', KEYS[1])
 local count = redis.call('INCR', KEYS[2])
 if count == 1 then redis.call('EXPIRE', KEYS[2], 86400) end
-redis.call('SET', KEYS[3], '1', 'EX', 40)
+redis.call('SET', KEYS[3], ARGV[1], 'EX', ARGV[2])
 return 10 - count
 `;
 
@@ -33,7 +33,7 @@ async function redis(command: (string | number)[]) {
   return result.result;
 }
 
-export async function reserveDemo(request: Request) {
+export async function reserveDemo(request: Request, lockSeconds = 40) {
   // Vercel controls this header. Never use client-supplied x-forwarded-for.
   const ip = process.env.VERCEL ? request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() : "local-test";
   if (!ip) throw new Error("Missing trusted client identity");
@@ -41,7 +41,8 @@ export async function reserveDemo(request: Request) {
   const scope = process.env.VERCEL_ENV === "production" ? "production" : "preview";
   const prefix = `nokturn:demo:v1:${scope}`;
   const lock = `${prefix}:busy:${hash}`;
-  const remaining = Number(await redis(["EVAL", RESERVE_SCRIPT, 3, `${prefix}:total`, `${prefix}:visitor:${hash}`, lock]));
+  const token = randomUUID();
+  const remaining = Number(await redis(["EVAL", RESERVE_SCRIPT, 3, `${prefix}:total`, `${prefix}:visitor:${hash}`, lock, token, lockSeconds]));
   if (!Number.isInteger(remaining)) throw new Error("Invalid limiter response");
-  return { remaining, release: async () => { await redis(["DEL", lock]); } };
+  return { remaining, release: async () => { await redis(["EVAL", "if redis.call('GET', KEYS[1]) == ARGV[1] then return redis.call('DEL', KEYS[1]) else return 0 end", 1, lock, token]); } };
 }

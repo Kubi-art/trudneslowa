@@ -3,7 +3,7 @@
 export const site = {
   name: "NOKTURN",
   // Docelowo własna domena (np. nokturn.com). Na razie strona działa pod trudneslowa.pl.
-  url: "https://trudneslowa.pl",
+  url: "https://www.trudneslowa.pl",
   email: "[ADRES E-MAIL]",
   // Numer, pod którym odbiera demo (format do linku tel:)
   demoPhone: "+48000000000",
@@ -17,5 +17,5 @@ export const site = {
   nip: "[NIP]",
   regon: "[REGON]",
   address: "[ADRES SIEDZIBY]",
-  legalUpdated: "21 października 2026",
+  legalUpdated: "27 października 2026",
 };
