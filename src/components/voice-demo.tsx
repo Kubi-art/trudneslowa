@@ -38,7 +38,7 @@ export function VoiceDemo() {
     catch(e){busy.current=false;if(mounted.current){setStatus('idle');setError(e instanceof DOMException&&e.name==='NotAllowedError'?'Mikrofon jest zablokowany. Zezwól na dostęp w przeglądarce lub skorzystaj z czatu.':e instanceof Error?e.message:'Nie udało się uruchomić mikrofonu.');}}
   }
   function cancel(){recorder.current?.cancel();recorder.current=null;busy.current=false;setStatus('idle');setSeconds(0);}
-  return <section className="nk-voice" id="demo-glos" aria-labelledby="voice-title">
+  return <section className="nk-voice-demo" id="demo-glos" aria-labelledby="voice-title">
     <div><p className="nk-voice-eyebrow">DEMO GŁOSOWE</p><h3 id="voice-title">Powiedz to Mai.</h3><p>Nagraj pytanie. Asystentka odpowie głosem i pokaże zapis rozmowy. To próba w przeglądarce, bez wykonywania połączenia telefonicznego.</p>
       <label htmlFor="voice-industry">Wybierz fikcyjną firmę</label><select id="voice-industry" value={industry} disabled={status!=='idle'} onChange={e=>{setIndustry(e.target.value as DemoIndustry);setMessages([]);setAudio(null);setError('');}}>{Object.entries(demoBusinesses).map(([key,c])=><option key={key} value={key}>{c.name} — {c.label}</option>)}</select>
       <label className="nk-live-consent"><input type="checkbox" checked={consent} disabled={status!=='idle'} onChange={e=>setConsent(e.target.checked)}/>Chcę przetestować głos AI. Nagranie i treść rozmowy zostaną przesłane do OpenAI. Użyję fikcyjnych danych.</label>

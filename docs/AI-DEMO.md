@@ -1,6 +1,6 @@
 # NOKTURN — agent demo
 
-Czat tekstowy i demo głosowe zaimplementowane. Wymagają aktywacji, rzeczywistych testów dostawcy oraz uzupełnienia danych operatora. Przygotowane symulacje są odrębne.
+Czat tekstowy i demo głosowe zaimplementowane. Aktywne i przetestowane z dostawcą na chronionym podglądzie feature/ai-demo. Publiczna aktywacja wymaga uzupełnienia danych operatora oraz pozostałych testów opisanych poniżej. Przygotowane symulacje są odrębne.
 
 Maja obsługuje fikcyjne firmy Czysty Kąt, Studio Forma i Prosty Bilans. Wiedza i zasady: src/lib/demo-agent.ts. GPT-5 mini przez Responses API, store:false, bez narzędzi i rzeczywistych działań. Treść renderowana jako tekst. Zmiana branży czyści kontekst.
 
@@ -30,7 +30,7 @@ Testy używają atrap OpenAI, nie zużywają kredytów. Przed publiczną aktywac
 
 ## Publikacja i dane
 
-Przed aktywacją uzupełnić dane administratora i politykę: wiadomości trafiają do OpenAI; store:false nie znosi retencji bezpieczeństwa dostawcy. Opisać Redis, HMAC adresu IP, retencję i cel limitowania. Obecne dokumenty robocze opisują symulację i wymagają aktualizacji. UI uprzedza o AI, fikcyjnych danych i wysyłce do OpenAI. Potwierdzenie zasad demo nie zastępuje określenia podstawy prawnej.
+Przed aktywacją uzupełnić dane administratora i politykę: wiadomości trafiają do OpenAI; store:false nie znosi retencji bezpieczeństwa dostawcy. Opisać Redis, HMAC adresu IP, retencję i cel limitowania. Obecne dokumenty robocze opisują także rzeczywisty czat i głos, ale wymagają danych operatora. UI uprzedza o AI, fikcyjnych danych i wysyłce do OpenAI. Potwierdzenie zasad demo nie zastępuje określenia podstawy prawnej.
 
 ## Głos
 
@@ -42,9 +42,9 @@ Zaimplementowano /api/demo/voice i nagrywanie w AudioWorklet. Po kliknięciu uż
 
 VOICE_DEMO_ENABLED=true włącza głos dodatkowo do DEMO_ENABLED. Domyślnie wyłączony. Czat i głos współdzielą istniejące liczniki (bez resetowania puli). Blokada głosu 100 s, tekstu 40 s; zwalnianie porównuje losowy token właściciela, żeby spóźnione żądanie nie usuwało nowej blokady. Timeouty usług 20+30+20 s, funkcji 90 s. Klient nie zapisuje nagrań na dysku; anulowanie zamyka mikrofon, porzucenie komponentu również. Po limicie czasu nagranie jest automatycznie wysyłane, zgodnie z informacją w polityce.
 
-Model gpt-4o-mini-tts jest oznaczony jako deprecated w katalogu OpenAI. Przed długoterminowym uruchomieniem należy potwierdzić datę wyłączenia i migrację generowania mowy. Nie potwierdzono jeszcze dostępności gpt-transcribe ani TTS na konkretnym kluczu użytkownika; konieczny realny test.
+Model gpt-4o-mini-tts jest oznaczony jako deprecated w katalogu OpenAI. Przed długoterminowym uruchomieniem należy potwierdzić datę wyłączenia i migrację generowania mowy. Dostępność transkrypcji i TTS potwierdzona rzeczywistym testem na kluczu projektu 27.10.2026.
 
-Wyniki lokalne: 5 testów przechodzi (walidacja rozmów, błędy dostawcy, konfiguracja Marketplace, rzeczywista długość WAV, przepływ głosowy i fallback TTS), lint i build. Są to testy z atrapami, nie dowód jakości głosu ani połączenia produkcyjnego. Brak testu odsłuchowego, mobilnego i rzeczywistej rozmowy OpenAI: chroniony podgląd Vercel wymaga autoryzowanego dostępu. Nie wyłączać Deployment Protection w celu testowania.
+Wyniki lokalne: 5 testów przechodzi (walidacja rozmów, błędy dostawcy, konfiguracja Marketplace, rzeczywista długość WAV, przepływ głosowy i fallback TTS), lint i build. Są to testy z atrapami, nie dowód jakości głosu ani połączenia produkcyjnego. Rzeczywiste testy dostawcy wykonano przez autoryzowany, czasowy dostęp do podglądu (wyniki poniżej). Nadal brak oceny odsłuchowej, testu fizycznego mikrofonu i testu mobilnego. Nie wyłączać Deployment Protection w celu testowania.
 
 Polityka i regulamin rozszerzone o dane głosu, transkrypcję, OpenAI i Redis. Wciąż wymagają danych operatora, kontaktu oraz potwierdzenia retencji infrastruktury i warunków transferów. Nie oznaczać dokumentów jako finalnych przed uzupełnieniem.
 
@@ -53,3 +53,13 @@ Polityka i regulamin rozszerzone o dane głosu, transkrypcję, OpenAI i Redis. W
 - https://developers.openai.com/api/docs/guides/text-to-speech
 - https://developers.openai.com/api/docs/guides/your-data
 - https://eur-lex.europa.eu/eli/reg/2016/679/oj
+
+## Weryfikacja rzeczywista 27.10.2026
+
+- Czat API: HTTP 200, poprawna cena czyszczenia kanapy od 180 zł i dojazd na Mokotów.
+- Interfejs czatu: zgoda, wysłanie pytania i wyświetlenie odpowiedzi; Maja odmówiła potwierdzenia prawdziwej rezerwacji bez dostępu do kalendarza.
+- Głos API: syntetyczny WAV z pytaniem o cenę kanapy → poprawna transkrypcja → odpowiedź po polsku → MP3 438528 bajtów, 27,408 s. To test serwera, nie fizycznego mikrofonu ani jakości odsłuchowej.
+- Wykorzystano trzy rzeczywiste próby ze wspólnego licznika preview; pozostało 7 prób w testowanej puli odwiedzającego. Liczników nie resetowano.
+- Flagi DEMO_ENABLED i VOICE_DEMO_ENABLED włączone wyłącznie dla feature/ai-demo. Produkcja pozostaje wyłączona.
+
+28.10.2026: rozdzielono klasę głównego panelu głosu (nk-voice-demo) od istniejącej dekoracji nagłówka (nk-voice), usuwając dziedziczone zwężenie i obrót panelu.
