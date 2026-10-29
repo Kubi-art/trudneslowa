@@ -52,7 +52,7 @@ export async function POST(request: Request) {
     const upstream = await fetch("https://api.openai.com/v1/realtime/calls", {
       method: "POST", headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` }, body: form, signal: AbortSignal.timeout(15000),
     });
-    if (!upstream.ok) { console.warn("realtime_create_failed", { status: upstream.status }); return failure("Nie udało się połączyć z Mają. Skorzystaj z czatu lub spróbuj później.", 502); }
+    if (!upstream.ok) { const detail = await upstream.json().catch(() => ({})); const safe = (v: unknown) => typeof v === "string" && /^[a-zA-Z0-9_.-]{1,100}$/.test(v) ? v : undefined; console.warn("realtime_create_failed", { status: upstream.status, code: safe(detail.error?.code), parameter: safe(detail.error?.param) }); return failure("Nie udało się połączyć z Mają. Skorzystaj z czatu lub spróbuj później.", 502); }
     stage = "call_identity";
     const location = upstream.headers.get("location");
     const match = location?.match(/\/realtime\/calls\/(rtc_[a-zA-Z0-9_-]+)$/);

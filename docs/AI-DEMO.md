@@ -49,3 +49,9 @@ Polecenia: `node --test tests/*.test.cjs`, `npm run lint`, `npm run build`.
 - https://developers.openai.com/api/reference/resources/realtime/subresources/calls/methods/create
 - https://developers.openai.com/api/reference/resources/realtime/subresources/calls/methods/hangup
 - node_modules/next/dist/docs/01-app/03-api-reference/04-functions/after.md
+
+### Diagnostyka podglądu
+
+W teście 29.10 zestawienie sesji zwróciło 502; nie potwierdzono jeszcze rozmowy Realtime. Przeglądarka testowa nie ma mikrofonu. Dodano diagnostykę etapu i kodu błędu bez treści użytkownika oraz uzbrojenie watchdog na zdarzeniu WebSocket open (bez czekania na media peer).
+
+Operator może jednorazowo odblokować wyłącznie preview, ustawiając nową wartość REALTIME_RECOVERY_ID. Atomowy skrypt zapisuje wykorzystany identyfikator i usuwa wyłącznie klucz paused — nigdy liczniki total/visitor. Ta sama wartość nie działa ponownie, a produkcja ignoruje to ustawienie. Używać dopiero po sprawdzeniu przyczyny i upewnieniu się, że poprzednia sesja już nie działa.

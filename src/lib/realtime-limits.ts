@@ -5,6 +5,11 @@ export const REALTIME_SECONDS = 120;
 export const REALTIME_POOL = 10;
 const prefix = () => `nokturn:realtime:v1:${process.env.VERCEL_ENV === "production" ? "production" : "preview"}`;
 export const REALTIME_RESERVE_SCRIPT = `
+-- Preview-only operator recovery nonce. Never renew any usage counters.
+if ARGV[1] ~= '' and redis.call('GET', KEYS[4]) ~= ARGV[1] then
+  redis.call('SET', KEYS[4], ARGV[1])
+  redis.call('DEL', KEYS[3])
+end
 if redis.call('EXISTS', KEYS[3]) == 1 then return -3 end
 if tonumber(redis.call('GET', KEYS[1]) or '0') >= 10 then return -1 end
 if redis.call('EXISTS', KEYS[2]) == 1 then return -2 end
@@ -20,7 +25,8 @@ export async function reserveRealtime(request: Request) {
   if (!ip) throw Error("Missing trusted identity");
   const hash = createHmac("sha256", process.env.DEMO_LIMIT_SECRET!).update(ip).digest("hex");
   const p = prefix();
-  const result = Number(await redis(["EVAL", REALTIME_RESERVE_SCRIPT, 3, `${p}:total`, `${p}:visitor:${hash}`, `${p}:paused`]));
+  const recovery = process.env.VERCEL_ENV === "preview" && /^[a-zA-Z0-9_-]{1,80}$/.test(process.env.REALTIME_RECOVERY_ID ?? "") ? process.env.REALTIME_RECOVERY_ID! : "";
+  const result = Number(await redis(["EVAL", REALTIME_RESERVE_SCRIPT, 4, `${p}:total`, `${p}:visitor:${hash}`, `${p}:paused`, `${p}:recovery`, recovery]));
   if (![0, -1, -2, -3].includes(result)) throw Error("Invalid reservation");
   return result;
 }
