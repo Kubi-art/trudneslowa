@@ -8,7 +8,7 @@ test('stop signatures reject forged, expired and arbitrary call IDs',()=>{
 });
 test('watchdog independently hangs up at deadline and on session tampering',async()=>{
  let sockets=[],hangups=0,paused=0;
- class Socket extends EventEmitter {constructor(){super();sockets.push(this);queueMicrotask(()=>this.emit('message',Buffer.from(JSON.stringify({type:'session.created'}))));}terminate(){this.emit('close');}}
+ class Socket extends EventEmitter {constructor(){super();sockets.push(this);queueMicrotask(()=>this.emit('open'));}terminate(){this.emit('close');}}
  const old=global.fetch;global.fetch=async()=>{hangups++;return new Response(null,{status:200});};
  const a=load('src/lib/realtime-agent.ts',{'ws':Socket,'./demo-agent':agent,'./realtime-limits':{pauseRealtime:async()=>{paused++;}}});
  try{

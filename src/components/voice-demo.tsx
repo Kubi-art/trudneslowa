@@ -51,7 +51,7 @@ export function VoiceDemo() {
       <p>Włącz mikrofon i zadaj Mai własne pytanie. Odpowie głosem, zapamięta kontekst i wysłucha Cię, gdy jej przerwiesz.</p>
       <p className="nk-voice-detail">2 minuty · po polsku · bez numeru telefonu</p>
       <label htmlFor="voice-industry">Jaką firmę ma reprezentować Maja?</label>
-      <select id="voice-industry" value={industry} disabled={active} onChange={e => { setIndustry(e.target.value as DemoIndustry); setMessages([]); setError(""); setNotice(""); }}>{Object.entries(demoBusinesses).map(([key, company]) => <option key={key} value={key}>{company.name} — {company.label}</option>)}</select>
+      <select id="voice-industry" value={industry} disabled={active} onChange={e => { setIndustry(e.target.value as DemoIndustry); setMessages([]); setError(""); setNotice(""); setStatus("idle"); }}>{Object.entries(demoBusinesses).map(([key, company]) => <option key={key} value={key}>{company.name} — {company.label}</option>)}</select>
       <label className="nk-live-consent"><input type="checkbox" checked={consent} disabled={active} onChange={e => setConsent(e.target.checked)} />Rozumiem, że rozmawiam z AI, a dźwięk jest przesyłany na żywo do OpenAI. Użyję wyłącznie fikcyjnych danych.</label>
       <a href="/polityka-prywatnosci">Jak przetwarzamy dane?</a>
     </div>

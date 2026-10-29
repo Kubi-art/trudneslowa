@@ -51,6 +51,12 @@ export function watchRealtime(callId: string, expiresAt: number) {
     catch { /* hangupCall paused new sessions; watchdog still cleans its socket. */ }
     finally { ws.terminate(); console.info("realtime_closed", { reason, responses, totalTokens }); doneResolve(); }
   }
+  // The SDP answer has not reached the browser yet. Waiting for a session
+  // event here can deadlock negotiation; the authenticated socket handshake
+  // is enough to arm the watchdog before the media peer connects.
+  ws.on("open", () => {
+    if (!settled && !closing) { settled = true; clearTimeout(startupTimer); readyResolve(); }
+  });
   ws.on("message", raw => {
     try {
       const event = JSON.parse(raw.toString());
