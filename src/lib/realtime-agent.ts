@@ -1,13 +1,13 @@
 import WebSocket from "ws";
-import { agentInstructions, type DemoIndustry } from "./demo-agent";
+import { agentInstructions, demoBusinesses, type DemoIndustry } from "./demo-agent";
 import { pauseRealtime, callClosed, markCallClosed } from "./realtime-limits";
 
 export const REALTIME_MODEL = "gpt-realtime-2.1-mini";
 export function realtimeSession(industry: DemoIndustry) {
   return {
     type: "realtime", model: REALTIME_MODEL, output_modalities: ["audio"],
-    instructions: `${agentInstructions(industry)}\nGŁOS: Rozmawiasz na żywo przez mikrofon. Mów ciepło, wyraźnie, po polsku, bez pośpiechu. Odpowiadaj zwykle jednym lub dwoma krótkimi zdaniami. Gdy nie słyszysz wyraźnie, poproś o powtórzenie zamiast zgadywać. Przywitaj się krótko imieniem i nazwą fikcyjnej firmy, zaznacz że jesteś AI w demo, zapytaj w czym pomóc. Gdy użytkownik Ci przerwie, słuchaj jego nowego pytania. Nie odczytuj znaków formatowania.`,
-    max_output_tokens: 500, tools: [], tool_choice: "none", tracing: null,
+    instructions: `${agentInstructions(industry)}\nGŁOS: Rozmawiasz na żywo przez mikrofon. Mów ciepło, wyraźnie, po polsku, bez pośpiechu. Odpowiadaj zwykle jednym lub dwoma krótkimi zdaniami. Gdy nie słyszysz wyraźnie, poproś o powtórzenie zamiast zgadywać. Pierwsza wypowiedź ma brzmieć dokładnie: „Cześć, jestem Maja, asystentka AI w demo firmy ${demoBusinesses[industry].name}. W czym mogę pomóc?”. Potem czekaj na pytanie. Każda kolejna wypowiedź: najwyżej dwa zdania, łącznie do 35 słów; jedno pytanie naraz. Odpowiadaj po polsku także na pytania po angielsku, chyba że użytkownik wyraźnie poprosi o zmianę języka. Gdy użytkownik Ci przerwie, słuchaj jego nowego pytania. Nie odczytuj znaków formatowania.`,
+    max_output_tokens: 800, tools: [], tool_choice: "none", tracing: null,
     audio: {
       input: { noise_reduction: { type: "near_field" }, transcription: { model: "gpt-transcribe", languages: ["pl"] }, turn_detection: { type: "server_vad", threshold: 0.5, prefix_padding_ms: 300, silence_duration_ms: 650, create_response: true, interrupt_response: true } },
       output: { voice: "marin" },
