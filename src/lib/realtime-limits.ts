@@ -33,6 +33,10 @@ export async function reserveRealtime(request: Request) {
 // Fail closed for future sessions if the provider cannot confirm a hangup.
 export async function pauseRealtime() { await redis(["SET", `${prefix()}:paused`, "1"]); }
 
+// Shared confirmation makes browser-stop and watchdog-stop idempotent across workers.
+export async function callClosed(callId: string) { return await redis(["GET", `${prefix()}:closed:${callId}`]) === "1"; }
+export async function markCallClosed(callId: string) { await redis(["SET", `${prefix()}:closed:${callId}`, "1", "EX", 600]); }
+
 export function signCall(callId: string, expiresAt: number) {
   const payload = `${callId}.${expiresAt}`;
   return `${payload}.${createHmac("sha256", process.env.DEMO_LIMIT_SECRET!).update(`realtime-stop:${payload}`).digest("hex")}`;

@@ -1,6 +1,6 @@
 import WebSocket from "ws";
 import { agentInstructions, type DemoIndustry } from "./demo-agent";
-import { pauseRealtime } from "./realtime-limits";
+import { pauseRealtime, callClosed, markCallClosed } from "./realtime-limits";
 
 export const REALTIME_MODEL = "gpt-realtime-2.1-mini";
 export function realtimeSession(industry: DemoIndustry) {
@@ -17,14 +17,19 @@ export function realtimeSession(industry: DemoIndustry) {
 }
 export async function hangupCall(callId: string) {
   if (!/^rtc_[a-zA-Z0-9_-]+$/.test(callId)) throw Error("Invalid call");
+  if (await callClosed(callId).catch(() => false)) return;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const r = await fetch(`https://api.openai.com/v1/realtime/calls/${callId}/hangup`, {
         method: "POST", headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` }, signal: AbortSignal.timeout(4000),
       });
-      if (r.ok || r.status === 404 || r.status === 410) return;
+      if (r.ok || r.status === 404 || r.status === 410) {
+        await markCallClosed(callId).catch(() => {});
+        return;
+      }
     } catch { /* Retry closing; never retry creating a paid call. */ }
   }
+  if (await callClosed(callId).catch(() => false)) return;
   await pauseRealtime().catch(() => {});
   console.error("realtime_hangup_unconfirmed"); // Never log audio, SDP, tokens or transcripts.
   throw Error("Hangup unconfirmed");

@@ -10,7 +10,7 @@ test('watchdog independently hangs up at deadline and on session tampering',asyn
  let sockets=[],hangups=0,paused=0;
  class Socket extends EventEmitter {constructor(){super();sockets.push(this);queueMicrotask(()=>this.emit('open'));}terminate(){this.emit('close');}}
  const old=global.fetch;global.fetch=async()=>{hangups++;return new Response(null,{status:200});};
- const a=load('src/lib/realtime-agent.ts',{'ws':Socket,'./demo-agent':agent,'./realtime-limits':{pauseRealtime:async()=>{paused++;}}});
+ const a=load('src/lib/realtime-agent.ts',{'ws':Socket,'./demo-agent':agent,'./realtime-limits':{pauseRealtime:async()=>{paused++;},callClosed:async()=>false,markCallClosed:async()=>{}}});
  try{
  let w=a.watchRealtime('rtc_test',Date.now()+20);await w.ready;await w.done;assert.equal(hangups,1);
  w=a.watchRealtime('rtc_test',Date.now()+5000);await w.ready;sockets.at(-1).emit('message',Buffer.from(JSON.stringify({type:'session.updated'})));await w.done;assert.equal(hangups,2);
@@ -46,4 +46,15 @@ test('client cancellation while microphone permission is pending stops late trac
  const oldPC=global.RTCPeerConnection,oldFetch=global.fetch;global.RTCPeerConnection=function(){};global.fetch=async()=>{requests++;};
  const nothing=()=>{};
  try{const c=client.createVoiceSession('uslugi',{pause:nothing,srcObject:null},{status:nothing,line:nothing,time:nothing,error:nothing,audioBlocked:nothing,ended:nothing});const pending=c.start();c.close();grant({getTracks:()=>[{stop:()=>{tracksStopped++;}}]});await pending;assert.equal(tracksStopped,1);assert.equal(requests,0);}finally{if(descriptor)Object.defineProperty(global,'navigator',descriptor);else delete global.navigator;global.RTCPeerConnection=oldPC;global.fetch=oldFetch;}
+});
+
+test('confirmed hangup is idempotent across server workers',async()=>{
+ const closed=new Set();let requests=0,paused=0;const old=global.fetch;
+ const mocks={'./demo-agent':agent,'./realtime-limits':{callClosed:async id=>closed.has(id),markCallClosed:async id=>{closed.add(id);},pauseRealtime:async()=>{paused++;}}};
+ global.fetch=async()=>{requests++;return new Response(null,{status:200});};
+ try{await load('src/lib/realtime-agent.ts',mocks).hangupCall('rtc_repeat');
+ global.fetch=async()=>{requests++;return new Response(null,{status:400});};
+ await load('src/lib/realtime-agent.ts',mocks).hangupCall('rtc_repeat');
+ assert.equal(requests,1);assert.equal(paused,0);
+ }finally{global.fetch=old;}
 });

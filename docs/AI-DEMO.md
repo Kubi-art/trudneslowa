@@ -55,3 +55,6 @@ Polecenia: `node --test tests/*.test.cjs`, `npm run lint`, `npm run build`.
 W teście 29.10 zestawienie sesji zwróciło 502; nie potwierdzono jeszcze rozmowy Realtime. Przeglądarka testowa nie ma mikrofonu. Dodano diagnostykę etapu i kodu błędu bez treści użytkownika oraz uzbrojenie watchdog na zdarzeniu WebSocket open (bez czekania na media peer).
 
 Operator może jednorazowo odblokować wyłącznie preview, ustawiając nową wartość REALTIME_RECOVERY_ID. Atomowy skrypt zapisuje wykorzystany identyfikator i usuwa wyłącznie klucz paused — nigdy liczniki total/visitor. Ta sama wartość nie działa ponownie, a produkcja ignoruje to ustawienie. Używać dopiero po sprawdzeniu przyczyny i upewnieniu się, że poprzednia sesja już nie działa.
+
+### Live verification 2026-10-29
+Preview real WebRTC synthetic-audio test reached the model: server recorded two responses (2710 total tokens) and a time_limit shutdown after 120 seconds. Client-side audio/transcript log was not recovered before the ephemeral sandbox expired, so audible playback quality is NOT yet verified. A subsequent browser stop attempted a second hangup and paused the pool. Shared 10-minute successful-hangup confirmations now make repeated stops idempotent; regression tested across separate module instances. The preview remains paused pending a controlled follow-up test. Production AI remains disabled.
