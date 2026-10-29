@@ -41,12 +41,8 @@ test('Marketplace credentials activate limiter without exposing secrets',()=>{
  const limits=load('src/lib/demo-limits.ts');assert.equal(limits.demoConfigured(),true);delete process.env.KV_REST_API_TOKEN;assert.equal(limits.demoConfigured(),false);
  }finally{for(const n of names)if(previous[n]===undefined)delete process.env[n];else process.env[n]=previous[n];}
 });
-test('voice route reserves before providers, rejects oversized audio and returns text on TTS failure',async()=>{
- const audioModule=load('src/lib/demo-audio.ts');let calls=0,reserves=0,releases=0,enabled=true;
- const route=load('src/app/api/demo/voice/route.ts',{'next/server':{connection:async()=>{}},'@/lib/demo-agent':agent,'@/lib/demo-audio':audioModule,'@/lib/demo-response':{generateDemoAnswer:async()=> 'Przykładowa cena to 180 zł.'},'@/lib/demo-limits':{demoConfigured:()=>enabled,reserveDemo:async()=>{reserves++;return{remaining:8,release:async()=>{releases++;}};}}});
- const previousFetch=global.fetch,previousVoice=process.env.VOICE_DEMO_ENABLED;process.env.VOICE_DEMO_ENABLED='true';
- const b=Buffer.alloc(32044);b.write('RIFF',0);b.writeUInt32LE(b.length-8,4);b.write('WAVE',8);b.write('fmt ',12);b.writeUInt32LE(16,16);b.writeUInt16LE(1,20);b.writeUInt16LE(1,22);b.writeUInt32LE(16000,24);b.writeUInt32LE(32000,28);b.writeUInt16LE(2,32);b.writeUInt16LE(16,34);b.write('data',36);b.writeUInt32LE(b.length-44,40);
- function req(audio=b.toString('base64')){return new Request('https://demo.test/api/demo/voice',{method:'POST',headers:{origin:'https://demo.test','content-type':'application/json'},body:JSON.stringify({industry:'uslugi',messages:[],audio})});}
- global.fetch=async(url,options)=>{calls++;assert.equal(reserves,1);if(url.endsWith('/transcriptions')){assert.equal(options.body.get('model'),'gpt-transcribe');assert.equal(options.body.get('file').size,32044);return Response.json({text:'Ile kosztuje kanapa?'});}assert.equal(JSON.parse(options.body).input,'Przykładowa cena to 180 zł.');return Response.json({}, {status:503});};
- try{enabled=false;assert.equal((await route.POST(req())).status,503);enabled=true;assert.equal((await route.POST(req('A'.repeat(860000)))).status,400);assert.equal(calls,0);assert.equal(reserves,0);const result=await route.POST(req());assert.equal(result.status,200);const data=await result.json();assert.equal(data.audio,null);assert.equal(data.remaining,8);assert.equal(data.transcript,'Ile kosztuje kanapa?');assert.equal(releases,1);assert.equal(calls,2);}finally{global.fetch=previousFetch;if(previousVoice===undefined)delete process.env.VOICE_DEMO_ENABLED;else process.env.VOICE_DEMO_ENABLED=previousVoice;}
+test('retired voice endpoint cannot invoke a paid provider',async()=>{
+ const route=load('src/app/api/demo/voice/route.ts');
+ assert.equal((await route.POST()).status,410);
+ assert.equal((await (await route.GET()).json()).available,false);
 });

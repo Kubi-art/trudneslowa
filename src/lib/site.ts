@@ -17,5 +17,5 @@ export const site = {
   nip: "[NIP]",
   regon: "[REGON]",
   address: "[ADRES SIEDZIBY]",
-  legalUpdated: "27 października 2026",
+  legalUpdated: "29 października 2026",
 };

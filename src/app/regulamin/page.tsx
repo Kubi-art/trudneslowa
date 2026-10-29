@@ -15,7 +15,7 @@ export default function Page() {
       <ul>
         <li>Informacje o koncepcji asystentki telefonicznej i chatbota dla firm.</li>
         <li>Symulacje przygotowanych rozmów i przykładowych podsumowań. Nie łączą się z modelem AI, nie wykonują połączeń, nie nagrywają dźwięku i nie wysyłają zgłoszeń.</li>
-        <li>Demonstracje czatu i głosu AI, gdy są włączone. Odpowiedzi powstają automatycznie i mogą zawierać błędy. Rozmowa głosowa odbywa się przez krótkie nagrania w przeglądarce. Limit to 20 sekund na nagranie i 10 prób czatu i głosu łącznie z jednej sieci w ciągu 24 godzin. Dostępność zależy również od wspólnej puli prób; nie odnawia się ona automatycznie. Nieudane zapytania do dostawcy mogą zużyć próbę.</li>
+        <li>Demonstracje czatu i głosu AI, gdy są włączone. Odpowiedzi powstają automatycznie i mogą zawierać błędy. Rozmowa głosowa odbywa się na żywo przez mikrofon w przeglądarce i trwa do 2 minut; może zakończyć się wcześniej po osiągnięciu limitu użycia lub awarii. Z jednej sieci dostępna jest jedna próba głosowa oraz 10 pytań tekstowych w ciągu 24 godzin. Dostępność zależy również od wspólnej puli prób; nie odnawia się ona automatycznie. Nieudane zapytania do dostawcy mogą zużyć próbę.</li>
         <li>Kalkulator wartości potencjalnych zleceń. Wynik wynika z ustawionych przez użytkownika założeń i nie stanowi gwarancji przychodu, oszczędności ani efektów wdrożenia.</li>
       </ul>
       <p>Strona nie umożliwia zakupu, płatności, zakładania konta ani zawarcia umowy o wdrożenie. Przykłady rozmów są fikcyjne i nie potwierdzają rzeczywistych rezerwacji.</p>

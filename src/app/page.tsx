@@ -189,17 +189,18 @@ export default function Home() {
               <div className="nk-section-heading">
                 <div>
                   <h2>
-                    Zobacz rozmowę.
+                    Zadaj własne pytanie.
                     <br />
-                    <span>Sprawdź, co trafia do firmy.</span>
+                    <span>Poznaj Maję w rozmowie.</span>
                   </h2>
                 </div>
                 <p>
-                  Wybierz branżę i kanał. Zobacz, jak pytanie klienta zamienia
-                  się w czytelne zgłoszenie dla Twojej firmy.
+                  Wybierz przykładową firmę. Napisz do asystentki albo porozmawiaj
+                  z nią przez mikrofon — odpowiedzi powstają na żywo.
                 </p>
               </div>
             </Reveal>
+            <nav className="nk-demo-choices" aria-label="Wybierz sposób rozmowy"><a className="nk-button" href="#rozmowa-ai">Napisz do Mai <span aria-hidden="true">↗</span></a><a className="nk-button nk-button-ghost" href="#demo-glos">Porozmawiaj z Mają <span aria-hidden="true">↗</span></a></nav>
             <LiveDemo />
             <VoiceDemo />
             <h3 className="nk-scripted-title">Zobacz także przygotowaną symulację</h3>
@@ -295,7 +296,7 @@ export default function Home() {
               ],
               [
                 "Czy pokazane demo jest prawdziwą rozmową z AI?",
-                "Czat i demo głosowe generują odpowiedzi AI na Twoje pytania, gdy są dostępne. Głos działa przez mikrofon w przeglądarce, po nagraniu krótkiego pytania. Firmy i ceny są fikcyjne, a rezerwacje i zgłoszenia nie są realizowane. Osobno pokazujemy podpisane, przygotowane symulacje.",
+                "Czat i demo głosowe generują odpowiedzi AI na Twoje pytania, gdy są dostępne. Głos działa przez mikrofon w przeglądarce, na żywo, z automatycznym wykrywaniem końca wypowiedzi. Firmy i ceny są fikcyjne, a rezerwacje i zgłoszenia nie są realizowane. Osobno pokazujemy podpisane, przygotowane symulacje.",
               ],
               [
                 "Co jest potrzebne do ustalenia ceny?",

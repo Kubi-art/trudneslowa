@@ -20,7 +20,7 @@ export function demoConfigured() {
     (process.env.DEMO_LIMIT_SECRET?.length ?? 0) >= 32;
 }
 
-async function redis(command: (string | number)[]) {
+export async function redis(command: (string | number)[]) {
   const url = (process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL)!;
   if (!url.startsWith("https://")) throw new Error("Invalid limiter configuration");
   const response = await fetch(url, {
