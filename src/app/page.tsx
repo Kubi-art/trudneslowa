@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { VoiceDemo } from "@/components/voice-demo";
+import { LiveDemo } from "@/components/live-demo";
 import { PhoneCall } from "@/components/phone-call";
 import { Calculator } from "@/components/calculator";
 import { Logo } from "@/components/logo";
@@ -170,7 +172,7 @@ export default function Home() {
                     ))}
                   </ul>
                   <a
-                    href={i === 0 ? "#demo-telefon" : "#demo-czat"}
+                    href={i === 0 ? "#demo-glos" : "#rozmowa-ai"}
                     className="nk-text-link"
                   >
                     Zobacz przykład {i === 0 ? "rozmowy" : "czatu"}{" "}
@@ -187,17 +189,21 @@ export default function Home() {
               <div className="nk-section-heading">
                 <div>
                   <h2>
-                    Zobacz rozmowę.
+                    Zadaj własne pytanie.
                     <br />
-                    <span>Sprawdź, co trafia do firmy.</span>
+                    <span>Poznaj Maję w rozmowie.</span>
                   </h2>
                 </div>
                 <p>
-                  Wybierz branżę i kanał. Zobacz, jak pytanie klienta zamienia
-                  się w czytelne zgłoszenie dla Twojej firmy.
+                  Wybierz przykładową firmę. Napisz do asystentki albo porozmawiaj
+                  z nią przez mikrofon — odpowiedzi powstają na żywo.
                 </p>
               </div>
             </Reveal>
+            <nav className="nk-demo-choices" aria-label="Wybierz sposób rozmowy"><a className="nk-button" href="#rozmowa-ai">Napisz do Mai <span aria-hidden="true">↗</span></a><a className="nk-button nk-button-ghost" href="#demo-glos">Porozmawiaj z Mają <span aria-hidden="true">↗</span></a></nav>
+            <LiveDemo />
+            <VoiceDemo />
+            <h3 className="nk-scripted-title">Zobacz także przygotowaną symulację</h3>
             <ProductDemo />
           </div>
         </section>
@@ -290,7 +296,7 @@ export default function Home() {
               ],
               [
                 "Czy pokazane demo jest prawdziwą rozmową z AI?",
-                "Nie. To interaktywna symulacja przygotowanych scenariuszy. Pokazuje projekt obsługi i przykładowe podsumowania. Nie wykonuje połączeń ani nie wysyła danych.",
+                "Czat i demo głosowe generują odpowiedzi AI na Twoje pytania, gdy są dostępne. Głos działa przez mikrofon w przeglądarce, na żywo, z automatycznym wykrywaniem końca wypowiedzi. Firmy i ceny są fikcyjne, a rezerwacje i zgłoszenia nie są realizowane. Osobno pokazujemy podpisane, przygotowane symulacje.",
               ],
               [
                 "Co jest potrzebne do ustalenia ceny?",
@@ -318,7 +324,7 @@ export default function Home() {
               Wypróbuj prezentację <span aria-hidden="true">↗</span>
             </a>
             <p className="nk-fine">
-              Wersja demonstracyjna · bez logowania i podawania danych
+              Bezpłatne demo · bez konta · używaj fikcyjnych danych
             </p>
           </div>
         </section>

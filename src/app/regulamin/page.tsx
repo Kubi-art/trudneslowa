@@ -8,21 +8,22 @@ export const metadata: Metadata = { title: "Regulamin | NOKTURN", robots: { inde
 export default function Page() {
   return <LegalPage title="Regulamin strony internetowej">
     <Section title="1. Operator i zakres regulaminu">
-      <p>Operatorem strony NOKTURN jest {site.company}, {site.owner}, adres: {site.address}, NIP: {site.nip}. Kontakt: {site.email}.</p>
+      <p>Operatorem strony NOKTURN jest {site.owner}, adres kontaktowy: {site.address}. Kontakt: {site.email}.</p>
       <p>Regulamin określa zasady bezpłatnego korzystania z treści strony, interaktywnych prezentacji i kalkulatora. Nie reguluje przyszłych płatnych usług asystenta telefonicznego ani chatbota — ich zakres i warunki wymagają odrębnej umowy.</p>
     </Section>
     <Section title="2. Dostępne funkcje">
       <ul>
         <li>Informacje o koncepcji asystentki telefonicznej i chatbota dla firm.</li>
         <li>Symulacje przygotowanych rozmów i przykładowych podsumowań. Nie łączą się z modelem AI, nie wykonują połączeń, nie nagrywają dźwięku i nie wysyłają zgłoszeń.</li>
+        <li>Demonstracje czatu i głosu AI, gdy są włączone. Odpowiedzi powstają automatycznie i mogą zawierać błędy. Rozmowa głosowa odbywa się na żywo przez mikrofon w przeglądarce i trwa do 2 minut; może zakończyć się wcześniej po osiągnięciu limitu użycia lub awarii. Z jednej sieci dostępna jest jedna próba głosowa oraz 10 pytań tekstowych w ciągu 24 godzin. Dostępność zależy również od wspólnej puli prób; nie odnawia się ona automatycznie. Nieudane zapytania do dostawcy mogą zużyć próbę.</li>
         <li>Kalkulator wartości potencjalnych zleceń. Wynik wynika z ustawionych przez użytkownika założeń i nie stanowi gwarancji przychodu, oszczędności ani efektów wdrożenia.</li>
       </ul>
       <p>Strona nie umożliwia zakupu, płatności, zakładania konta ani zawarcia umowy o wdrożenie. Przykłady rozmów są fikcyjne i nie potwierdzają rzeczywistych rezerwacji.</p>
     </Section>
     <Section title="3. Korzystanie ze strony">
-      <p>Do korzystania potrzebne są urządzenie z dostępem do internetu i aktualna przeglądarka. Funkcje interaktywne wymagają JavaScript. Operator nie pobiera opłat; koszty dostępu do internetu wynikają z umowy użytkownika z jego dostawcą.</p>
+      <p>Do korzystania potrzebne są urządzenie z dostępem do internetu i aktualna przeglądarka. Funkcje interaktywne wymagają JavaScript. Demo głosowe wymaga również mikrofonu i udzielenia przeglądarce dostępu do niego. Użytkownik może korzystać z czatu bez mikrofonu. Operator nie pobiera opłat; koszty dostępu do internetu wynikają z umowy użytkownika z jego dostawcą.</p>
       <p>Bezpłatne korzystanie rozpoczyna się z chwilą otwarcia strony i kończy po jej opuszczeniu. Nie wymaga rejestracji ani wypowiedzenia. Regulamin można zapisać lub wydrukować za pomocą przeglądarki.</p>
-      <p>Zabronione jest dostarczanie treści bezprawnych, zakłócanie działania strony oraz próby nieuprawnionego dostępu do jej infrastruktury.</p>
+      <p>W demonstracjach należy używać fikcyjnych danych. Nie służą do rzeczywistych rezerwacji, porad specjalistycznych ani zgłaszania sytuacji awaryjnych. Zabronione jest dostarczanie treści bezprawnych, zakłócanie działania strony oraz próby nieuprawnionego dostępu do jej infrastruktury.</p>
     </Section>
     <Section title="4. Reklamacje">
       <p>Problemy z działaniem strony można zgłaszać na adres {site.email}. W zgłoszeniu należy opisać problem i podać adres umożliwiający odpowiedź. Pomocne są data zdarzenia i nazwa przeglądarki.</p>
